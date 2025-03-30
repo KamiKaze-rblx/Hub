@@ -21,6 +21,6 @@ local Script_Tbl = {
 	[7074860883] = "https://raw.githubusercontent.com/KamiKaze-rblx/Hub/refs/heads/main/Arise"
 }
 local Script_Url = Script_Tbl[data.universeId]
-if Script_Url then 
-	print(Script_Url)
+if Script_Url then
+	loadstring(game:HttpGet(Script_Url))()
 end
