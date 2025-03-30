@@ -9,7 +9,7 @@ end)
 if success then
 	data = HttpService:JSONDecode(response.Body)
 	if data and data.universeId then
-		print("Universe ID:", data.universeId)
+		--print("Universe ID:", data.universeId)
 	else
 		game.Players.LocalPlayer:Kick("Universe ID not found.")
 	end
