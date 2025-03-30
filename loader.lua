@@ -18,7 +18,7 @@ else
 end
 
 local Script_Tbl = {
-	[7074860883] = "https://raw.githubusercontent.com/KamiKaze-rblx/Hub/refs/heads/main/Arise"
+	[7074860883] = "https://raw.githubusercontent.com/KamiKaze-rblx/Hub/refs/heads/main/Arise.lua"
 }
 local Script_Url = Script_Tbl[data.universeId]
 if Script_Url then
