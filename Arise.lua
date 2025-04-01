@@ -523,8 +523,8 @@ end
 -- Misc Tab
 
 --// Webhook Settings
-getgenv().Webhook = "https://discord.com/api/webhooks/1295499917652918370/VngKK-SJ2RHP7FXpE5_r_uPQkjDszKTg26U8bmqZNOAuzRO7hAb1aCpmyRKDx6srconh" -- Webhook URL
-getgenv().DiscordId = "" -- User ID for ping (leave empty if none)
+--getgenv().Webhook = "" -- Webhook URL
+--getgenv().DiscordId = "" -- User ID for ping (leave empty if none)
 
 -- Services
 local HttpService = game:GetService("HttpService")
