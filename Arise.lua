@@ -1,4 +1,3 @@
-
 -- Services
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -11,10 +10,12 @@ local FLYING_FIXER = LOCAL_PLAYER.Character.CharacterScripts.FlyingFixer
 local USER_FOLDER = Workspace.__Main.__Pets:WaitForChild(tostring(LOCAL_PLAYER.UserId))
 local PET_FOLDER = USER_FOLDER:GetChildren()
 
+-- UI Library Setup
 local Library = loadstring(game:HttpGetAsync("https://github.com/ActualMasterOogway/Fluent-Renewed/releases/latest/download/Fluent.luau"))()
 local SaveManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/SaveManager.luau"))()
 local InterfaceManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/InterfaceManager.luau"))()
 
+-- Window Creation
 local Window = Library:CreateWindow{
 	Title = `Arise Crossover`,
 	SubTitle = "by KamiKaze10",
@@ -27,6 +28,7 @@ local Window = Library:CreateWindow{
 	MinimizeKey = Enum.KeyCode.LeftControl
 }
 
+-- Tab Definitions
 local Tabs = {
 	Main = Window:CreateTab{Title = "Main", Icon = "phosphor-users-bold"},
 	Teleport = Window:CreateTab{Title = "Teleport", Icon = "chevrons-up"},
@@ -51,6 +53,7 @@ local function teleportTo(position)
 	LOCAL_PLAYER.Character.HumanoidRootPart.CFrame = CFrame.new(position)
 end
 
+-- Main Tab Functions
 local maxDistance = 120
 
 local function attackNearest()
@@ -289,11 +292,15 @@ do
 					local target = getTargetNPC()
 					if target and target ~= currentTarget then
 						currentTarget = target
-						PET_EVENT:Fire({
-							Event = "Attack",
-							Enemy = target.Name,
-							PetPos = "",
-							AttackType = "All"
+						local Event = ReplicatedStorage.BridgeNet2.dataRemoteEvent
+						Event:FireServer({
+							[1] = {
+								PetPos = {}, 
+								AttackType = "All", 
+								Event = "Attack", 
+								Enemy = target.Name
+							}, 
+							[2] = "	"
 						})
 					end
 					task.wait(0.5)
@@ -390,14 +397,33 @@ end
 
 -- Dungeon Tab
 do
-	-- Enter Dungeon Toggle
-	local ToggleDungeon1 = Tabs.Dungeon:AddToggle("MyToggleDungeon1", {Title = "Auto Join Dungeon", Default = false })
+	-- Enter Rank Test Toggle
+	local ToggleDungeon1 = Tabs.Dungeon:AddToggle("MyToggleDungeon1", {Title = "Auto Join Rank Test", Default = false })
 
 	ToggleDungeon1:OnChanged(function()
 		if Options.MyToggleDungeon1.Value and game.PlaceId == 87039211657390 then
 			task.spawn(function()
 				local BridgeNet2 = require(ReplicatedStorage.BridgeNet2)
 				while Options.MyToggleDungeon1.Value do
+					local BridgeNet2 = require(game:GetService("ReplicatedStorage").BridgeNet2)
+					BridgeNet2.ReferenceBridge("GENERAL_EVENT"):Fire({
+						Event = "DungeonAction";
+						Action = "TestEnter";
+					})
+					task.wait(5)
+				end
+			end)
+		end
+	end)
+	
+	-- Enter Dungeon Toggle
+	local ToggleDungeon2 = Tabs.Dungeon:AddToggle("MyToggleDungeon2", {Title = "Auto Join Dungeon", Default = false })
+
+	ToggleDungeon2:OnChanged(function()
+		if Options.MyToggleDungeon2.Value and game.PlaceId == 87039211657390 then
+			task.spawn(function()
+				local BridgeNet2 = require(ReplicatedStorage.BridgeNet2)
+				while Options.MyToggleDungeon2.Value do
 					-- Buy dungeon with gems
 					BridgeNet2.ReferenceBridge("GENERAL_EVENT"):Fire({
 						Event = "DungeonAction",
@@ -427,7 +453,7 @@ do
 	end)
 
 	-- Dungeon Farm Toggle
-	local ToggleDungeon2 = Tabs.Dungeon:AddToggle("MyToggleDungeon2", {Title = "Dungeon Farm", Default = false })
+	local ToggleDungeon3 = Tabs.Dungeon:AddToggle("MyToggleDungeon3", {Title = "Dungeon Farm", Default = false })
 	local dungeonTarget = nil
 
 	local function findNearestDungeonNPC()
@@ -458,7 +484,7 @@ do
 				AttackType = "All"
 			})
 		else
-			-- Find highest room number
+			-- Find highest room
 			local highest = 0
 			for _, child in ipairs(Workspace.__Main.__World:GetChildren()) do
 				local num = tonumber(child.Name:match("Room_(%d+)"))
@@ -477,11 +503,11 @@ do
 		end
 	end
 
-	ToggleDungeon2:OnChanged(function()
-		if Options.MyToggleDungeon2.Value and game.PlaceId == 128336380114944 then
+	ToggleDungeon3:OnChanged(function()
+		if Options.MyToggleDungeon3.Value and game.PlaceId == 128336380114944 then
 			disableFlying()
 			task.spawn(function()
-				while Options.MyToggleDungeon2.Value do
+				while Options.MyToggleDungeon3.Value do
 					if dungeonTarget and (dungeonTarget.Parent == nil or dungeonTarget.HealthBar.Main.Bar.Amount.Text == "0 HP") then
 						findNearestDungeonNPC()
 					elseif dungeonTarget == nil then
@@ -494,13 +520,6 @@ do
 	end)
 end
 
--- Built in Anti-AFK
-local VirtualUser = game:GetService('VirtualUser')
-LOCAL_PLAYER.Idled:connect(function()
-	VirtualUser:CaptureController()
-	VirtualUser:ClickButton2(Vector2.new())
-end)
-
 -- Misc Tab
 do
 	-- ServerHop Toggle
@@ -510,6 +529,13 @@ do
 		Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/KamiKaze-rblx/AriseCrossover/refs/heads/main/ServerHub"))() end
 	})
 end
+
+-- Built in Anti-AFK
+local VirtualUser = game:GetService('VirtualUser')
+LOCAL_PLAYER.Idled:connect(function()
+	VirtualUser:CaptureController()
+	VirtualUser:ClickButton2(Vector2.new())
+end)
 
 -- Settings
 SaveManager:SetLibrary(Library)
