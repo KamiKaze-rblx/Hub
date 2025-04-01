@@ -484,7 +484,7 @@ do
 				AttackType = "All"
 			})
 		else
-			-- Find highest room
+			-- Find highest room number
 			local highest = 0
 			for _, child in ipairs(Workspace.__Main.__World:GetChildren()) do
 				local num = tonumber(child.Name:match("Room_(%d+)"))
@@ -521,14 +521,158 @@ do
 end
 
 -- Misc Tab
+
+--// Webhook Settings
+getgenv().Webhook = "https://discord.com/api/webhooks/1295499917652918370/VngKK-SJ2RHP7FXpE5_r_uPQkjDszKTg26U8bmqZNOAuzRO7hAb1aCpmyRKDx6srconh" -- Webhook URL
+getgenv().DiscordId = "" -- User ID for ping (leave empty if none)
+
+-- Services
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+
+-- Constants
+local WEBHOOK_THUMBNAIL = "https://media.discordapp.net/attachments/1268028183966519432/1356616669090287717/16782888365.png?ex=67ed373a&is=67ebe5ba&hm=b7b2e6821c19a82e0df918e3b927398e93936e6c332d06cef896d73d6a6e4acd&=&format=webp&quality=lossless"
+local WEBHOOK_FOOTER_ICON = "https://media.discordapp.net/attachments/1268028183966519432/1268028224730824776/Jewels.png?ex=66aaeecf&is=66a99d4f&hm=4e9289e29287a8ced35727493e776b413672d1050eb879af6106639fbe468794&=&format=webp&quality=lossless"
+
+-- playerStats
+local player = Players.LocalPlayer
+local playerStats = {
+	Name = player.Name,
+	Cash = player.leaderstats.Cash.Value or 0,
+	Gems = player.PlayerGui.Hud.BottomContainer.Gems.Text,
+	Rank = player.leaderstats.Rank.Value or 0,
+	ShortCash = function(self) 
+		return string.format("%.1fT", self.Cash / 1e12)
+	end
+}
+
+-- getAmount
+local function getItemAmount(itemName)
+	local item = player.leaderstats.Inventory.Items:FindFirstChild(itemName)
+	if item then
+		local attributes = item:GetAttributes()
+		return attributes and attributes.Amount or 0
+	end
+	return 0
+end
+
+local inventoryItems = {
+	Ticket = getItemAmount("Ticket"),
+	CommonDust = getItemAmount("EnchCommon"),
+	RareDust = getItemAmount("EnchRare"),
+	LegendaryDust = getItemAmount("EnchLegendary")
+}
+
+-- Webhook Function
+local function WebhookUpdate(ArisedPet)
+	local discordMention = getgenv().DiscordId ~= "" and "<@" .. getgenv().DiscordId .. ">" or ""
+
+	local embedFields = {
+		{
+			name = "Player Stats",
+			value = string.format(
+				"<:ariseCoin:1356612455408730173> %s\n<:ariseGems:1356611518636101753> %s\n<:ariseRank:1356612757805600788> %s\n<:ariseTicket:1356610247338492054> %s\n<:ariseLegDust:1356613726966644880> %s\n<:ariseRareDust:1356613400171647078> %s\n<:ariseCommDust:1356615964275507362> %s",
+				playerStats:ShortCash(),
+				playerStats.Gems,
+				playerStats.Rank,
+				inventoryItems.Ticket,
+				inventoryItems.LegendaryDust,
+				inventoryItems.RareDust,
+				inventoryItems.CommonDust
+			)
+		}
+	}
+
+	if ArisedPet == "Beru" then
+		table.insert(embedFields, {
+			name = "Got New Pet",
+			value = "<:ariseBeru:1356619207130877952> " .. ArisedPet,
+			inline = true
+		})
+	else
+		table.insert(embedFields, {
+			name = "Got New Pet",
+			value = ArisedPet,
+			inline = true
+		})
+	end
+
+	local webhookData = {
+		content = discordMention,
+		embeds = {{
+			title = "Arise CrossOver",
+			description = "**Username:** ||" .. playerStats.Name .. "||",
+			type = "rich",
+			color = tonumber("378bff", 16),
+			fields = embedFields,
+			thumbnail = { url = WEBHOOK_THUMBNAIL },
+			footer = {
+				text = "Arise CrossOver",
+				icon_url = WEBHOOK_FOOTER_ICON
+			}
+		}}
+	}
+
+	local success, response = pcall(function()
+		if syn and syn.request then
+			return syn.request({
+				Url = getgenv().Webhook,
+				Method = "POST",
+				Headers = {
+					["Content-Type"] = "application/json"
+				},
+				Body = HttpService:JSONEncode(webhookData)
+			})
+		elseif request then
+			return request({
+				Url = getgenv().Webhook,
+				Method = "POST",
+				Headers = {
+					["Content-Type"] = "application/json"
+				},
+				Body = HttpService:JSONEncode(webhookData)
+			})
+		else
+			return HttpService:PostAsync(getgenv().Webhook, HttpService:JSONEncode(webhookData))
+		end
+	end)
+
+	if not success then
+		warn("Webhook failed to send:", response)
+	end
+end
+--//
+
 do
-	-- ServerHop Toggle
+-- ServerHop Toggle
 	Tabs.Misc:AddButton({
 		Title = "ServerHop",
 		Description = "",
 		Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/KamiKaze-rblx/AriseCrossover/refs/heads/main/ServerHub"))() end
 	})
 end
+-- Webhook Toggle
+local ToggleMisc1 = Tabs.Misc:AddToggle("MyToggleMisc1", {
+	Title = "Enable Webhook", 
+	Default = false 
+})
+
+local connection = nil
+
+ToggleMisc1:OnChanged(function(value)
+	if Options.MyToggleMisc1.Value then
+		connection = game:GetService("Players").LocalPlayer.PlayerGui.__Disable.Menus.Pets.Main.Container.ChildAdded:Connect(function(ArisedPet)
+			if Options.MultiDropdownMain.Value[ArisedPet.Main.Value.Text] then
+				WebhookUpdate(ArisedPet.Main.Value.Text)
+			end
+		end)
+	else
+		if connection then
+			connection:Disconnect()
+			connection = nil
+		end
+	end
+end)
 
 -- Built in Anti-AFK
 local VirtualUser = game:GetService('VirtualUser')
@@ -548,7 +692,7 @@ SaveManager:SetFolder("ScriptHub/Arise Crossover")
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
 
--- notification
+-- Initialize UI with improved notification
 Window:SelectTab(1)
 Library:Notify({
 	Title = "Arise Crossover",
@@ -557,7 +701,7 @@ Library:Notify({
 	Image = "rbxassetid://4483345998" -- Optional icon
 })
 
--- autoload
+-- Load any autoload configs with version check
 local success, err = pcall(function()
 	SaveManager:LoadAutoloadConfig()
 end)
