@@ -127,6 +127,20 @@ do
 		end
 	end)
 
+	-- Auto Click Toggle
+	local ToggleMain2 = Tabs.Main:AddToggle("MyToggleMain2", {Title = "Auto Click", Default = false })
+
+	ToggleMain2:OnChanged(function()
+		local autoClickButton = LOCAL_PLAYER.PlayerGui.Hud.BottomContainer.Submenu.Buttons.AutoClick
+		local currentState = autoClickButton.OnOff.Text
+
+		if Options.MyToggleMain2.Value and currentState == "OFF" then
+			firesignal(autoClickButton.Activated)
+		elseif not Options.MyToggleMain2.Value and currentState == "ON" then
+			firesignal(autoClickButton.Activated)
+		end
+	end)
+
 	-- Pet Selection Dropdown
 	local petinfo = require(game:GetService("ReplicatedStorage").Indexer.PetsInfo)
 	local ptable = {}
@@ -135,24 +149,24 @@ do
 	end
 
 	local MultiDropdownMain = Tabs.Main:CreateDropdown("MultiDropdownMain", {
-		Title = "Select ",
-		Description = "You can select multiple values.",
+		Title = "Select shadow to arise",
+		Description = "",
 		Values = ptable,
 		Multi = true,
 		Default = {},
 	})
 
 	-- Auto Arise Toggle
-	local ToggleMain2 = Tabs.Main:AddToggle("MyToggleMain2", {Title = "Auto Arise", Default = false })
+	local ToggleMain3 = Tabs.Main:AddToggle("MyToggleMain3", {Title = "Auto Arise", Default = false })
 
-	ToggleMain2:OnChanged(function()
-		if Options.MyToggleMain2.Value then
+	ToggleMain3:OnChanged(function()
+		if Options.MyToggleMain3.Value then
 			local connection
 			connection = Workspace.__Main.__Enemies.Client.DescendantAdded:Connect(function(descendant)
 				if descendant:IsA("ProximityPrompt") and descendant.Name == "ArisePrompt" then
 					if MultiDropdownMain.Value[descendant.Parent.Parent.HealthBar.Main.Title.Text] or next(MultiDropdownMain.Value) == nil then
 						repeat
-							if not Options.MyToggleMain2.Value then break end
+							if not Options.MyToggleMain3.Value then break end
 							descendant.HoldDuration = 0
 							fireproximityprompt(descendant)
 							task.wait()
@@ -173,20 +187,20 @@ end
 -- Teleport Tab
 do
 	local teleportLocations = {
-		["Leveling City"] = Vector3.new(577.96826171875, 24.96237564086914, 261.4522705078125),
-		["Grass Village"] = Vector3.new(-3380.2373046875, 26.826528549194336, 2257.261962890625),
-		["Brum Island"] = Vector3.new(-2851.106201171875, 46.89878845214844, -2011.395263671875),
-		["Faceheal Town"] = Vector3.new(2641.795166015625, 42.92652893066406, -2645.07568359375),
-		["Lucky Kingdom"] = Vector3.new(198.33868408203125, 36.207679748535156, 4296.109375),
-		["Nipon City"] = Vector3.new(236.93267822265625, 30.396093368530273, -4301.60546875),
-		["Mori Town"] = Vector3.new(4816.31640625, 27.442340850830078, -120.22998046875),
+		{name = "Leveling City", position = Vector3.new(577.96826171875, 24.96237564086914, 261.4522705078125)},
+		{name = "Grass Village", position = Vector3.new(-3380.2373046875, 26.826528549194336, 2257.261962890625)},
+		{name = "Brum Island", position = Vector3.new(-2851.106201171875, 46.89878845214844, -2011.395263671875)},
+		{name = "Faceheal Town", position = Vector3.new(2641.795166015625, 42.92652893066406, -2645.07568359375)},
+		{name = "Lucky Kingdom", position = Vector3.new(198.33868408203125, 36.207679748535156, 4296.109375)},
+		{name = "Nipon City", position = Vector3.new(236.93267822265625, 30.396093368530273, -4301.60546875)},
+		{name = "Mori Town", position = Vector3.new(4816.31640625, 27.442340850830078, -120.22998046875)}
 	}
 
-	for name, position in pairs(teleportLocations) do
+	for _, location in ipairs(teleportLocations) do
 		Tabs.Teleport:AddButton({
-			Title = name,
-			Description = "TP",
-			Callback = function() teleportTo(position) end
+			Title = location.name,
+			Description = "",
+			Callback = function() teleportTo(location.position) end
 		})
 	end
 end
@@ -212,21 +226,10 @@ do
 	end)
 
 	-- Auto Click Toggle
-	local ToggleEvent2 = Tabs.Event:AddToggle("MyToggleEvent2", {Title = "Auto Click", Default = false })
 
-	ToggleEvent2:OnChanged(function()
-		local autoClickButton = LOCAL_PLAYER.PlayerGui.Hud.BottomContainer.Submenu.Buttons.AutoClick
-		local currentState = autoClickButton.OnOff.Text
-
-		if Options.MyToggleEvent2.Value and currentState == "OFF" then
-			firesignal(autoClickButton.Activated)
-		elseif not Options.MyToggleEvent2.Value and currentState == "ON" then
-			firesignal(autoClickButton.Activated)
-		end
-	end)
 
 	-- Beru Farm Toggle
-	local ToggleEvent3 = Tabs.Event:AddToggle("MyToggleEvent3", {Title = "Beru Farm", Default = false })
+	local ToggleEvent2 = Tabs.Event:AddToggle("MyToggleEvent2", {Title = "Beru Farm", Default = false })
 	local currentTarget = nil
 
 	local function getNPCHealth(npc)
@@ -285,10 +288,10 @@ do
 		end
 	end
 
-	ToggleEvent3:OnChanged(function()
-		if Options.MyToggleEvent3.Value then
+	ToggleEvent2:OnChanged(function()
+		if Options.MyToggleEvent2.Value then
 			task.spawn(function()
-				while Options.MyToggleEvent3.Value do
+				while Options.MyToggleEvent2.Value do
 					local target = getTargetNPC()
 					if target and target ~= currentTarget then
 						currentTarget = target
@@ -311,8 +314,8 @@ do
 
 	-- Event Location Button
 	Tabs.Event:AddButton({
-		Title = "Location",
-		Description = "TP",
+		Title = "Teleport to island",
+		Description = "",
 		Callback = function()
 			teleportTo(Vector3.new(3858.1455078125, 59.14358139038086, 3232.87841796875))
 		end
@@ -377,20 +380,24 @@ do
 
 	-- Mount Location Buttons
 	local mountLocations = {
-		["Location 1"] = Vector3.new(-6161.255859375, 134.2600555419922, 5512.96728515625),
-		["Location 2"] = Vector3.new(-5868.4384765625, 109.77471923828125, 362.4894104003906),
-		["Location 3"] = Vector3.new(-5430.81005859375, 107.44155883789062, -5502.25244140625),
-		["Location 4"] = Vector3.new(-702.2432861328125, 115.93551635742188, -3538.116455078125),
-		["Location 5"] = Vector3.new(449.9917297363281, 109.7667465209961, 3435.43701171875),
-		["Location 6"] = Vector3.new(3222.760009765625, 98.77737426757812, 38.062923431396484),
-		["Location 7"] = Vector3.new(4325.365234375, 118.99542999267578, -4819.78857421875)
+		{name = "Location 1", position = Vector3.new(-6161.255859375, 134.2600555419922, 5512.96728515625)},
+		{name = "Location 2", position = Vector3.new(-5868.4384765625, 109.77471923828125, 362.4894104003906)},
+		{name = "Location 3", position = Vector3.new(-5430.81005859375, 107.44155883789062, -5502.25244140625)},
+		{name = "Location 4", position = Vector3.new(-702.2432861328125, 115.93551635742188, -3538.116455078125)},
+		{name = "Location 5", position = Vector3.new(449.9917297363281, 109.7667465209961, 3435.43701171875)},
+		{name = "Location 6", position = Vector3.new(3222.760009765625, 98.77737426757812, 38.062923431396484)},
+		{name = "Location 7", position = Vector3.new(4325.365234375, 118.99542999267578, -4819.78857421875)}
 	}
 
-	for name, position in pairs(mountLocations) do
+	table.sort(mountLocations, function(a, b)
+		return tonumber(a.name:match("%d+")) < tonumber(b.name:match("%d+"))
+	end)
+
+	for _, location in ipairs(mountLocations) do
 		Tabs.Mount:AddButton({
-			Title = name,
-			Description = "TP",
-			Callback = function() teleportTo(position) end
+			Title = location.name,
+			Description = "",
+			Callback = function() teleportTo(location.position) end
 		})
 	end
 end
@@ -415,7 +422,7 @@ do
 			end)
 		end
 	end)
-	
+
 	-- Enter Dungeon Toggle
 	local ToggleDungeon2 = Tabs.Dungeon:AddToggle("MyToggleDungeon2", {Title = "Auto Join Dungeon", Default = false })
 
@@ -521,10 +528,6 @@ do
 end
 
 -- Misc Tab
-
---// Webhook Settings
---getgenv().Webhook = "" -- Webhook URL
---getgenv().DiscordId = "" -- User ID for ping (leave empty if none)
 
 -- Services
 local HttpService = game:GetService("HttpService")
@@ -644,37 +647,37 @@ end
 --//
 
 do
--- ServerHop Toggle
+	-- ServerHop Toggle
 	Tabs.Misc:AddButton({
 		Title = "ServerHop",
 		Description = "",
 		Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/KamiKaze-rblx/AriseCrossover/refs/heads/main/ServerHub"))() end
 	})
-end
--- Webhook Toggle
-local ToggleMisc1 = Tabs.Misc:AddToggle("MyToggleMisc1", {
-	Title = "Enable Webhook", 
-	Default = false 
-})
 
-local connection = nil
+	-- Webhook Toggle
+	local ToggleMisc1 = Tabs.Misc:AddToggle("MyToggleMisc1", {
+		Title = "Enable Webhook", 
+		Default = false 
+	})
 
-ToggleMisc1:OnChanged(function(value)
-	if Options.MyToggleMisc1.Value then
-		connection = game:GetService("Players").LocalPlayer.PlayerGui.__Disable.Menus.Pets.Main.Container.ChildAdded:Connect(function(ArisedPet)
-			if Options.MultiDropdownMain.Value[ArisedPet.Main.Value.Text] then
-				WebhookUpdate(ArisedPet.Main.Value.Text)
+	local connection = nil
+
+	ToggleMisc1:OnChanged(function(value)
+		if Options.MyToggleMisc1.Value then
+			connection = game:GetService("Players").LocalPlayer.PlayerGui.__Disable.Menus.Pets.Main.Container.ChildAdded:Connect(function(ArisedPet)
+				if Options.MultiDropdownMain.Value[ArisedPet.Main.Value.Text] then
+					WebhookUpdate(ArisedPet.Main.Value.Text)
+				end
+			end)
+		else
+			if connection then
+				connection:Disconnect()
+				connection = nil
 			end
-		end)
-	else
-		if connection then
-			connection:Disconnect()
-			connection = nil
 		end
-	end
-end)
+	end)
+end
 
--- Built in Anti-AFK
 local VirtualUser = game:GetService('VirtualUser')
 LOCAL_PLAYER.Idled:connect(function()
 	VirtualUser:CaptureController()
@@ -692,7 +695,6 @@ SaveManager:SetFolder("ScriptHub/Arise Crossover")
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
 
--- Initialize UI with improved notification
 Window:SelectTab(1)
 Library:Notify({
 	Title = "Arise Crossover",
@@ -701,7 +703,7 @@ Library:Notify({
 	Image = "rbxassetid://4483345998" -- Optional icon
 })
 
--- Load any autoload configs with version check
+-- autoload
 local success, err = pcall(function()
 	SaveManager:LoadAutoloadConfig()
 end)
