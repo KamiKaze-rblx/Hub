@@ -501,6 +501,15 @@ LOCAL_PLAYER.Idled:connect(function()
 	VirtualUser:ClickButton2(Vector2.new())
 end)
 
+-- Misc Tab
+do
+	-- ServerHop Toggle
+	Tabs.Misc:AddButton({
+		Title = "ServerHop",
+		Description = "",
+		Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/KamiKaze-rblx/AriseCrossover/refs/heads/main/ServerHub"))() end
+	})
+end
 
 -- Settings
 SaveManager:SetLibrary(Library)
