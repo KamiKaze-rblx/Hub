@@ -1,718 +1,956 @@
--- Services
-local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Workspace = game:GetService("Workspace")
-
--- Constants
-local LOCAL_PLAYER = Players.LocalPlayer
-local PET_EVENT = require(ReplicatedStorage.BridgeNet2).ReferenceBridge("PET_EVENT")
-local FLYING_FIXER = LOCAL_PLAYER.Character.CharacterScripts.FlyingFixer
-local USER_FOLDER = Workspace.__Main.__Pets:WaitForChild(tostring(LOCAL_PLAYER.UserId))
-local PET_FOLDER = USER_FOLDER:GetChildren()
-
--- UI Library Setup
-local Library = loadstring(game:HttpGetAsync("https://github.com/ActualMasterOogway/Fluent-Renewed/releases/latest/download/Fluent.luau"))()
-local SaveManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/SaveManager.luau"))()
-local InterfaceManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/InterfaceManager.luau"))()
-
--- Window Creation
-local Window = Library:CreateWindow{
-	Title = `Arise Crossover`,
-	SubTitle = "by KamiKaze10",
-	TabWidth = 160,
-	Size = UDim2.fromOffset(730, 425),
-	Resize = false,
-	MinSize = Vector2.new(570, 480),
-	Acrylic = false,
-	Theme = "Dark",
-	MinimizeKey = Enum.KeyCode.LeftControl
-}
-
--- Tab Definitions
-local Tabs = {
-	Main = Window:CreateTab{Title = "Main", Icon = "phosphor-users-bold"},
-	Teleport = Window:CreateTab{Title = "Teleport", Icon = "chevrons-up"},
-	Event = Window:CreateTab{Title = "Event", Icon = "tree-palm"},
-	Mount = Window:CreateTab{Title = "Mount", Icon = "paw-print"},
-	Dungeon = Window:CreateTab{Title = "Dungeon", Icon = "door-closed"},
-	Misc = Window:CreateTab{Title = "Misc", Icon = "ellipsis"},
-	Settings = Window:CreateTab{Title = "Settings", Icon = "settings"}
-}
-
-local Options = Library.Options
-
-local function disableFlying()
-	if FLYING_FIXER.Enabled then
-		FLYING_FIXER.Enabled = false
-		task.wait()
-	end
-end
-
-local function teleportTo(position)
-	disableFlying()
-	LOCAL_PLAYER.Character.HumanoidRootPart.CFrame = CFrame.new(position)
-end
-
--- Main Tab Functions
-local maxDistance = 120
-
-local function attackNearest()
-	local rootPart = LOCAL_PLAYER.Character:FindFirstChild("HumanoidRootPart")
-	if not rootPart then return end
-
-	local nearestNPC, nearestDistance
-
-	for _, NPC in pairs(Workspace.__Main.__Enemies.Client:GetChildren()) do
-		local distance = (NPC.HumanoidRootPart.Position - rootPart.Position).Magnitude
-		if not NPC or distance > maxDistance or (nearestDistance and distance >= nearestDistance) or 
-			NPC.HealthBar.Main.Bar.Amount.Text == "0 HP" then
-			continue
-		end
-		nearestDistance = distance
-		nearestNPC = NPC
-	end
-
-	if nearestNPC then
-		PET_EVENT:Fire({
-			Event = "Attack",
-			Enemy = nearestNPC.Name,
-			PetPos = "",
-			AttackType = "All"
-		})
-	end
-end
-
--- Main Tab UI
-do
-	-- Auto Attack Range Slider
-	local Slider = Tabs.Main:AddSlider("Slider", {
-		Title = "Auto Attack Range",
-		Description = "",
-		Default = 120,
-		Min = 0,
-		Max = 120,
-		Rounding = 1,
-		Callback = function(Value)
-			maxDistance = tonumber(Value)
-		end
-	})
-
-	-- Auto Attack Toggle
-	local ToggleMain1 = Tabs.Main:AddToggle("MyToggleMain1", {Title = "Auto Attack", Default = false })
-
-	ToggleMain1:OnChanged(function()
-		if Options.MyToggleMain1.Value and not USER_FOLDER:GetChildren()[1] then
-			Options.MyToggleMain1:SetValue(false)
-			Library:Notify{
-				Title = "Notification",
-				Content = "You don't have shadow equipped",
-				Duration = 3
-			}
-		elseif Options.MyToggleMain1.Value and USER_FOLDER:GetChildren()[1] then
-			task.spawn(function()
-				while Options.MyToggleMain1.Value do
-					local total = 0
-					for _, v in pairs(PET_FOLDER) do
-						if v:GetAttribute("Target") or v:GetAttribute("Target") == "" then
-							total += 1
-						end
-					end
-
-					if total == 0 then
-						attackNearest()
-					end
-					task.wait(0.5)
-				end
-			end)
-		end
-	end)
-
-	-- Auto Click Toggle
-	local ToggleMain2 = Tabs.Main:AddToggle("MyToggleMain2", {Title = "Auto Click", Default = false })
-
-	ToggleMain2:OnChanged(function()
-		local autoClickButton = LOCAL_PLAYER.PlayerGui.Hud.BottomContainer.Submenu.Buttons.AutoClick
-		local currentState = autoClickButton.OnOff.Text
-
-		if Options.MyToggleMain2.Value and currentState == "OFF" then
-			firesignal(autoClickButton.Activated)
-		elseif not Options.MyToggleMain2.Value and currentState == "ON" then
-			firesignal(autoClickButton.Activated)
-		end
-	end)
-
-	-- Pet Selection Dropdown
-	local petinfo = require(game:GetService("ReplicatedStorage").Indexer.PetsInfo)
-	local ptable = {}
-	for _, v in pairs(petinfo) do
-		table.insert(ptable, v.Name)
-	end
-
-	local MultiDropdownMain = Tabs.Main:CreateDropdown("MultiDropdownMain", {
-		Title = "Select shadow to arise",
-		Description = "",
-		Values = ptable,
-		Multi = true,
-		Default = {},
-	})
-
-	-- Auto Arise Toggle
-	local ToggleMain3 = Tabs.Main:AddToggle("MyToggleMain3", {Title = "Auto Arise", Default = false })
-
-	ToggleMain3:OnChanged(function()
-		if Options.MyToggleMain3.Value then
-			local connection
-			connection = Workspace.__Main.__Enemies.Client.DescendantAdded:Connect(function(descendant)
-				if descendant:IsA("ProximityPrompt") and descendant.Name == "ArisePrompt" then
-					if MultiDropdownMain.Value[descendant.Parent.Parent.HealthBar.Main.Title.Text] or next(MultiDropdownMain.Value) == nil then
-						repeat
-							if not Options.MyToggleMain3.Value then break end
-							descendant.HoldDuration = 0
-							fireproximityprompt(descendant)
-							task.wait()
-						until descendant.Parent == nil
-					end
-				end
-			end)
-
-			return function()
-				if connection then
-					connection:Disconnect()
-				end
-			end
-		end
-	end)
-end
-
--- Teleport Tab
-do
-	local teleportLocations = {
-		{name = "Leveling City", position = Vector3.new(577.96826171875, 24.96237564086914, 261.4522705078125)},
-		{name = "Grass Village", position = Vector3.new(-3380.2373046875, 26.826528549194336, 2257.261962890625)},
-		{name = "Brum Island", position = Vector3.new(-2851.106201171875, 46.89878845214844, -2011.395263671875)},
-		{name = "Faceheal Town", position = Vector3.new(2641.795166015625, 42.92652893066406, -2645.07568359375)},
-		{name = "Lucky Kingdom", position = Vector3.new(198.33868408203125, 36.207679748535156, 4296.109375)},
-		{name = "Nipon City", position = Vector3.new(236.93267822265625, 30.396093368530273, -4301.60546875)},
-		{name = "Mori Town", position = Vector3.new(4816.31640625, 27.442340850830078, -120.22998046875)}
-	}
-
-	for _, location in ipairs(teleportLocations) do
-		Tabs.Teleport:AddButton({
-			Title = location.name,
-			Description = "",
-			Callback = function() teleportTo(location.position) end
-		})
-	end
-end
-
--- Event Tab
-do
-	-- Stay in Boss Area Toggle
-	local ToggleEvent1 = Tabs.Event:AddToggle("MyToggleEvent1", {Title = "Stay in good position to attack guards", Default = false })
-
-	ToggleEvent1:OnChanged(function()
-		if Options.MyToggleEvent1.Value then
-			task.spawn(function()
-				local bossArea = Vector3.new(3843.900390625, 60.109989166259766, 3057.683837890625)
-				while Options.MyToggleEvent1.Value do
-					local distance = (LOCAL_PLAYER.Character.HumanoidRootPart.Position - bossArea).Magnitude
-					if distance > 1 then
-						teleportTo(bossArea)
-					end
-					task.wait(3)
-				end
-			end)
-		end
-	end)
-
-	-- Auto Click Toggle
-
-
-	-- Beru Farm Toggle
-	local ToggleEvent2 = Tabs.Event:AddToggle("MyToggleEvent2", {Title = "Beru Farm", Default = false })
-	local currentTarget = nil
-
-	local function getNPCHealth(npc)
-		local healthBar = npc:FindFirstChild("HealthBar")
-		if healthBar then
-			local bar = healthBar.Main.Bar:FindFirstChild("Amount")
-			if bar and bar:IsA("TextLabel") then
-				local hpText = bar.Text:gsub(" HP", "")
-				return tonumber(hpText:match("%d+")) or 0
-			end
-		end
-		return 0
-	end
-
-	local function isValidTarget(npc)
-		if not npc or not npc.Parent then return false end
-		return getNPCHealth(npc) > 0
-	end
-
-	local function getTargetNPC()
-		local enemiesFolder = Workspace.__Main.__Enemies.Client
-		local royalRedAnts = {}
-		local antQueen, antKing
-
-		for _, npc in pairs(enemiesFolder:GetChildren()) do
-			if isValidTarget(npc) then
-				local npcName = npc.HealthBar.Main.Title.Text
-
-				if npcName == "Royal Red Ant" then
-					table.insert(royalRedAnts, npc)
-				elseif npcName == "Ant Queen" then
-					antQueen = npc
-				elseif npcName == "Ant King" then
-					antKing = npc
-				end
-			end
-		end
-
-		-- Check current target validity first
-		if isValidTarget(currentTarget) then
-			local currentTitle = currentTarget.HealthBar.Main.Title.Text
-			if currentTitle == "Royal Red Ant" or 
-				(currentTitle == "Ant Queen" and #royalRedAnts == 0) or
-				(currentTitle == "Ant King" and #royalRedAnts == 0 and not antQueen) then
-				return currentTarget
-			end
-		end
-
-		-- Select new target based on priority
-		if #royalRedAnts > 0 then
-			return royalRedAnts[math.random(#royalRedAnts)]
-		elseif antQueen then
-			return antQueen
-		else
-			return antKing
-		end
-	end
-
-	ToggleEvent2:OnChanged(function()
-		if Options.MyToggleEvent2.Value then
-			task.spawn(function()
-				while Options.MyToggleEvent2.Value do
-					local target = getTargetNPC()
-					if target and target ~= currentTarget then
-						currentTarget = target
-						local Event = ReplicatedStorage.BridgeNet2.dataRemoteEvent
-						Event:FireServer({
-							[1] = {
-								PetPos = {}, 
-								AttackType = "All", 
-								Event = "Attack", 
-								Enemy = target.Name
-							}, 
-							[2] = "	"
-						})
-					end
-					task.wait(0.5)
-				end
-			end)
-		end
-	end)
-
-	-- Event Location Button
-	Tabs.Event:AddButton({
-		Title = "Teleport to island",
-		Description = "",
-		Callback = function()
-			teleportTo(Vector3.new(3858.1455078125, 59.14358139038086, 3232.87841796875))
-		end
-	})
-end
-
--- Mount Tab
-do
-	local function isMountInInventory(mountName)
-		local mountsFolder = LOCAL_PLAYER.leaderstats.Inventory.Mounts
-		for _, mount in pairs(mountsFolder:GetChildren()) do
-			if mount:GetAttribute("Name") == mountName then
-				return true
-			end
-		end
-		return false
-	end
-
-	-- Auto Farm Mount Toggle
-	local ToggleMount1 = Tabs.Mount:AddToggle("MyToggleMount1", {Title = "Auto Farm Mount", Default = false })
-
-	ToggleMount1:OnChanged(function()
-		if Options.MyToggleMount1.Value then
-			task.spawn(function()
-				local teleportLocations = {
-					Vector3.new(-6161.255859375, 134.2600555419922, 5512.96728515625),
-					Vector3.new(-5868.4384765625, 109.77471923828125, 362.4894104003906),
-					Vector3.new(-5430.81005859375, 107.44155883789062, -5502.25244140625),
-					Vector3.new(-702.2432861328125, 115.93551635742188, -3538.116455078125),
-					Vector3.new(449.9917297363281, 109.7667465209961, 3435.43701171875),
-					Vector3.new(3222.760009765625, 98.77737426757812, 38.062923431396484),
-					Vector3.new(4325.365234375, 118.99542999267578, -4819.78857421875)
-				}
-
-				local mountSpawnArea = Workspace.__Extra.__Appear
-				local cooldown = 1 -- seconds between teleports
-
-				while Options.MyToggleMount1.Value do
-					for i, location in ipairs(teleportLocations) do
-						if not Options.MyToggleMount1.Value then break end
-
-						teleportTo(location)
-						task.wait(cooldown)
-
-						local mounts = mountSpawnArea:GetChildren()
-						if #mounts > 0 then
-							local mount = mounts[1]
-							if not isMountInInventory(mount.Name) then
-								teleportTo(mount.PrimaryPart.Position)
-								task.wait(3.1)
-								fireproximityprompt(mount.MountPrompt)
-							end
-							loadstring(game:HttpGet("https://raw.githubusercontent.com/KamiKaze-rblx/AriseCrossover/refs/heads/main/ServerHub"))()
-							break
-						end
-					end
-					task.wait()
-				end
-			end)
-		end
-	end)
-
-	-- Mount Location Buttons
-	local mountLocations = {
-		{name = "Location 1", position = Vector3.new(-6161.255859375, 134.2600555419922, 5512.96728515625)},
-		{name = "Location 2", position = Vector3.new(-5868.4384765625, 109.77471923828125, 362.4894104003906)},
-		{name = "Location 3", position = Vector3.new(-5430.81005859375, 107.44155883789062, -5502.25244140625)},
-		{name = "Location 4", position = Vector3.new(-702.2432861328125, 115.93551635742188, -3538.116455078125)},
-		{name = "Location 5", position = Vector3.new(449.9917297363281, 109.7667465209961, 3435.43701171875)},
-		{name = "Location 6", position = Vector3.new(3222.760009765625, 98.77737426757812, 38.062923431396484)},
-		{name = "Location 7", position = Vector3.new(4325.365234375, 118.99542999267578, -4819.78857421875)}
-	}
-
-	table.sort(mountLocations, function(a, b)
-		return tonumber(a.name:match("%d+")) < tonumber(b.name:match("%d+"))
-	end)
-
-	for _, location in ipairs(mountLocations) do
-		Tabs.Mount:AddButton({
-			Title = location.name,
-			Description = "",
-			Callback = function() teleportTo(location.position) end
-		})
-	end
-end
-
--- Dungeon Tab
-do
-	-- Enter Rank Test Toggle
-	local ToggleDungeon1 = Tabs.Dungeon:AddToggle("MyToggleDungeon1", {Title = "Auto Join Rank Test", Default = false })
-
-	ToggleDungeon1:OnChanged(function()
-		if Options.MyToggleDungeon1.Value and game.PlaceId == 87039211657390 then
-			task.spawn(function()
-				local BridgeNet2 = require(ReplicatedStorage.BridgeNet2)
-				while Options.MyToggleDungeon1.Value do
-					local BridgeNet2 = require(game:GetService("ReplicatedStorage").BridgeNet2)
-					BridgeNet2.ReferenceBridge("GENERAL_EVENT"):Fire({
-						Event = "DungeonAction";
-						Action = "TestEnter";
-					})
-					task.wait(5)
-				end
-			end)
-		end
-	end)
-
-	-- Enter Dungeon Toggle
-	local ToggleDungeon2 = Tabs.Dungeon:AddToggle("MyToggleDungeon2", {Title = "Auto Join Dungeon", Default = false })
-
-	ToggleDungeon2:OnChanged(function()
-		if Options.MyToggleDungeon2.Value and game.PlaceId == 87039211657390 then
-			task.spawn(function()
-				local BridgeNet2 = require(ReplicatedStorage.BridgeNet2)
-				while Options.MyToggleDungeon2.Value do
-					-- Buy dungeon with gems
-					BridgeNet2.ReferenceBridge("GENERAL_EVENT"):Fire({
-						Event = "DungeonAction",
-						Action = "BuyTicket",
-						Type = "Gems"
-					})
-
-					-- Create dungeon
-					BridgeNet2.ReferenceBridge("GENERAL_EVENT"):Fire({
-						Event = "DungeonAction",
-						Action = "Create"
-					})
-
-					-- Start event
-					local GuiFunctions = require(ReplicatedStorage.SharedModules.Others.GuiFunctions)
-					local dungeonFrame = GuiFunctions.GetFrame("Dungeon", "Menus")
-					BridgeNet2.ReferenceBridge("GENERAL_EVENT"):Fire({
-						Event = "DungeonAction",
-						Action = "Start",
-						Dungeon = dungeonFrame:GetAttribute("DungeonId")
-					})
-
-					task.wait(5)
-				end
-			end)
-		end
-	end)
-
-	-- Dungeon Farm Toggle
-	local ToggleDungeon3 = Tabs.Dungeon:AddToggle("MyToggleDungeon3", {Title = "Dungeon Farm", Default = false })
-	local dungeonTarget = nil
-
-	local function findNearestDungeonNPC()
-		local rootPart = LOCAL_PLAYER.Character:FindFirstChild("HumanoidRootPart")
-		if not rootPart then return end
-
-		local nearestNPC, nearestDistance
-
-		for _, NPC in pairs(Workspace.__Main.__Enemies.Client:GetChildren()) do
-			local distance = (NPC.HumanoidRootPart.Position - rootPart.Position).Magnitude
-			if not NPC or (nearestDistance and distance >= nearestDistance) or 
-				NPC.HealthBar.Main.Bar.Amount.Text == "0 HP" then
-				continue
-			end
-
-			nearestDistance = distance
-			nearestNPC = NPC
-		end
-
-		if nearestNPC then
-			dungeonTarget = nearestNPC
-			rootPart.CFrame = CFrame.new(nearestNPC.HumanoidRootPart.Position + Vector3.new(1, 0, 0))
-			task.wait(0.2)
-			PET_EVENT:Fire({
-				Event = "Attack",
-				Enemy = nearestNPC.Name,
-				PetPos = "",
-				AttackType = "All"
-			})
-		else
-			-- Find highest room number
-			local highest = 0
-			for _, child in ipairs(Workspace.__Main.__World:GetChildren()) do
-				local num = tonumber(child.Name:match("Room_(%d+)"))
-				if num and num > highest then
-					highest = num
-				end
-			end
-
-			local entrance = Workspace.__Main.__World["Room_" .. highest]:WaitForChild("Entrace")
-			local distance = (entrance.Position - rootPart.Position).Magnitude
-
-			if distance > 120 then
-				rootPart.CFrame = CFrame.new(entrance.Position + Vector3.new(1, 1, 0))
-				dungeonTarget = nil
-			end
-		end
-	end
-
-	ToggleDungeon3:OnChanged(function()
-		if Options.MyToggleDungeon3.Value and game.PlaceId == 128336380114944 then
-			disableFlying()
-			task.spawn(function()
-				while Options.MyToggleDungeon3.Value do
-					if dungeonTarget and (dungeonTarget.Parent == nil or dungeonTarget.HealthBar.Main.Bar.Amount.Text == "0 HP") then
-						findNearestDungeonNPC()
-					elseif dungeonTarget == nil then
-						findNearestDungeonNPC()
-					end
-					task.wait(0.2)
-				end
-			end)
-		end
-	end)
-end
-
--- Misc Tab
-
--- Services
-local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
-
--- Constants
-local WEBHOOK_THUMBNAIL = "https://media.discordapp.net/attachments/1268028183966519432/1356616669090287717/16782888365.png?ex=67ed373a&is=67ebe5ba&hm=b7b2e6821c19a82e0df918e3b927398e93936e6c332d06cef896d73d6a6e4acd&=&format=webp&quality=lossless"
-local WEBHOOK_FOOTER_ICON = "https://media.discordapp.net/attachments/1268028183966519432/1268028224730824776/Jewels.png?ex=66aaeecf&is=66a99d4f&hm=4e9289e29287a8ced35727493e776b413672d1050eb879af6106639fbe468794&=&format=webp&quality=lossless"
-
--- playerStats
-local player = Players.LocalPlayer
-local playerStats = {
-	Name = player.Name,
-	Cash = player.leaderstats.Cash.Value or 0,
-	Gems = player.PlayerGui.Hud.BottomContainer.Gems.Text,
-	Rank = player.leaderstats.Rank.Value or 0,
-	ShortCash = function(self) 
-		return string.format("%.1fT", self.Cash / 1e12)
-	end
-}
-
--- getAmount
-local function getItemAmount(itemName)
-	local item = player.leaderstats.Inventory.Items:FindFirstChild(itemName)
-	if item then
-		local attributes = item:GetAttributes()
-		return attributes and attributes.Amount or 0
-	end
-	return 0
-end
-
-local inventoryItems = {
-	Ticket = getItemAmount("Ticket"),
-	CommonDust = getItemAmount("EnchCommon"),
-	RareDust = getItemAmount("EnchRare"),
-	LegendaryDust = getItemAmount("EnchLegendary")
-}
-
--- Webhook Function
-local function WebhookUpdate(ArisedPet)
-	local discordMention = getgenv().DiscordId ~= "" and "<@" .. getgenv().DiscordId .. ">" or ""
-
-	local embedFields = {
-		{
-			name = "Player Stats",
-			value = string.format(
-				"<:ariseCoin:1356612455408730173> %s\n<:ariseGems:1356611518636101753> %s\n<:ariseRank:1356612757805600788> %s\n<:ariseTicket:1356610247338492054> %s\n<:ariseLegDust:1356613726966644880> %s\n<:ariseRareDust:1356613400171647078> %s\n<:ariseCommDust:1356615964275507362> %s",
-				playerStats:ShortCash(),
-				playerStats.Gems,
-				playerStats.Rank,
-				inventoryItems.Ticket,
-				inventoryItems.LegendaryDust,
-				inventoryItems.RareDust,
-				inventoryItems.CommonDust
-			)
-		}
-	}
-
-	if ArisedPet == "Beru" then
-		table.insert(embedFields, {
-			name = "Got New Pet",
-			value = "<:ariseBeru:1356619207130877952> " .. ArisedPet,
-			inline = true
-		})
-	else
-		table.insert(embedFields, {
-			name = "Got New Pet",
-			value = ArisedPet,
-			inline = true
-		})
-	end
-
-	local webhookData = {
-		content = discordMention,
-		embeds = {{
-			title = "Arise CrossOver",
-			description = "**Username:** ||" .. playerStats.Name .. "||",
-			type = "rich",
-			color = tonumber("378bff", 16),
-			fields = embedFields,
-			thumbnail = { url = WEBHOOK_THUMBNAIL },
-			footer = {
-				text = "Arise CrossOver",
-				icon_url = WEBHOOK_FOOTER_ICON
-			}
-		}}
-	}
-
-	local success, response = pcall(function()
-		if syn and syn.request then
-			return syn.request({
-				Url = getgenv().Webhook,
-				Method = "POST",
-				Headers = {
-					["Content-Type"] = "application/json"
-				},
-				Body = HttpService:JSONEncode(webhookData)
-			})
-		elseif request then
-			return request({
-				Url = getgenv().Webhook,
-				Method = "POST",
-				Headers = {
-					["Content-Type"] = "application/json"
-				},
-				Body = HttpService:JSONEncode(webhookData)
-			})
-		else
-			return HttpService:PostAsync(getgenv().Webhook, HttpService:JSONEncode(webhookData))
-		end
-	end)
-
-	if not success then
-		warn("Webhook failed to send:", response)
-	end
-end
---//
-
-do
-	-- ServerHop Toggle
-	Tabs.Misc:AddButton({
-		Title = "ServerHop",
-		Description = "",
-		Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/KamiKaze-rblx/AriseCrossover/refs/heads/main/ServerHub"))() end
-	})
-
-	-- Webhook Toggle
-	local ToggleMisc1 = Tabs.Misc:AddToggle("MyToggleMisc1", {
-		Title = "Enable Webhook", 
-		Default = false 
-	})
-
-	local connection = nil
-
-	ToggleMisc1:OnChanged(function(value)
-		if Options.MyToggleMisc1.Value then
-			connection = game:GetService("Players").LocalPlayer.PlayerGui.__Disable.Menus.Pets.Main.Container.ChildAdded:Connect(function(ArisedPet)
-				if Options.MultiDropdownMain.Value[ArisedPet.Main.Value.Text] then
-					WebhookUpdate(ArisedPet.Main.Value.Text)
-				end
-			end)
-		else
-			if connection then
-				connection:Disconnect()
-				connection = nil
-			end
-		end
-	end)
-end
-
-local VirtualUser = game:GetService('VirtualUser')
-LOCAL_PLAYER.Idled:connect(function()
-	VirtualUser:CaptureController()
-	VirtualUser:ClickButton2(Vector2.new())
-end)
-
--- Settings
-SaveManager:SetLibrary(Library)
-InterfaceManager:SetLibrary(Library)
-SaveManager:IgnoreThemeSettings()
-SaveManager:SetIgnoreIndexes{}
-InterfaceManager:SetFolder("ScriptHub")
-SaveManager:SetFolder("ScriptHub/Arise Crossover")
-
-InterfaceManager:BuildInterfaceSection(Tabs.Settings)
-SaveManager:BuildConfigSection(Tabs.Settings)
-
-Window:SelectTab(1)
-Library:Notify({
-	Title = "Arise Crossover",
-	Content = "Script loaded successfully!",
-	Duration = 3,
-	Image = "rbxassetid://4483345998" -- Optional icon
-})
-
--- autoload
-local success, err = pcall(function()
-	SaveManager:LoadAutoloadConfig()
-end)
-
-if not success then
-	Library:Notify({
-		Title = "Config Error",
-		Content = "Failed to load settings: "..tostring(err),
-		Duration = 8,
-		Type = "error"
-	})
-end
+local v0 = {
+    Dongsoo = {
+        Name = "Soondoo", 
+        Rarity = "Common", 
+        Image = "rbxassetid://83952165808326", 
+        ImageOff = "rbxassetid://108424387455923", 
+        Area = 1, 
+        HitDMG = 5, 
+        UltDMG = 40, 
+        HitsToUlt = 7, 
+        UltTicks = 20, 
+        TickDelay = 0.1
+    }, 
+    Gunhee = {
+        Name = "Gonshee", 
+        Rarity = "Common", 
+        Image = "rbxassetid://82914824031307", 
+        ImageOff = "rbxassetid://89187362149415", 
+        Area = 1, 
+        HitDMG = 7, 
+        UltDMG = 60, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.25
+    }, 
+    Baek = {
+        Name = "Daek", 
+        Rarity = "Common", 
+        Image = "rbxassetid://112717350204803", 
+        ImageOff = "rbxassetid://125290026036870", 
+        Area = 1, 
+        HitDMG = 11, 
+        UltDMG = 90, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.6
+    }, 
+    JongIn = {
+        Name = "LongIn", 
+        Rarity = "Common", 
+        Image = "rbxassetid://107186645910420", 
+        ImageOff = "rbxassetid://99327077660359", 
+        Area = 1, 
+        HitDMG = 16, 
+        UltDMG = 135, 
+        HitsToUlt = 7, 
+        UltTicks = 3, 
+        TickDelay = 0.35
+    }, 
+    Andre = {
+        Name = "Anders", 
+        Rarity = "Common", 
+        Image = "rbxassetid://110844883730834", 
+        ImageOff = "rbxassetid://122241578526167", 
+        Area = 1, 
+        HitDMG = 25, 
+        UltDMG = 202, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.6
+    }, 
+    Kargalgan = {
+        Name = "Largalgan", 
+        Rarity = "Common", 
+        Image = "rbxassetid://85957675205976", 
+        ImageOff = "rbxassetid://118789713092200", 
+        Area = 1, 
+        HitDMG = 37, 
+        UltDMG = 303, 
+        HitsToUlt = 7, 
+        UltTicks = 4, 
+        TickDelay = 0.35
+    }, 
+    Igris = {
+        Name = "Vermillion", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://120675730326685", 
+        ImageOff = "rbxassetid://75712517150306", 
+        Area = 1, 
+        HitDMG = 111, 
+        UltDMG = 909, 
+        HitsToUlt = 6, 
+        UltTicks = 2, 
+        TickDelay = 0.55, 
+        AnimationType = "WeaponRight", 
+        HaveWeapon = true
+    }, 
+    JinWoo = {
+        Name = "Monarch", 
+        Rarity = "Legendary", 
+        Image = "rbxassetid://77293116688131", 
+        ImageOff = "rbxassetid://140170434516013", 
+        Area = 1, 
+        HitDMG = 475, 
+        UltDMG = 3750, 
+        HitsToUlt = 6, 
+        UltTicks = 6, 
+        TickDelay = 0.2, 
+        AnimationType = "DualDagger", 
+        HaveWeapon = true
+    }, 
+    RedAnt = {
+        Name = "Ant Soldier", 
+        Rarity = "Common", 
+        Image = "rbxassetid://103369685912011", 
+        ImageOff = "rbxassetid://93623500438566", 
+        Area = 1, 
+        HitDMG = 41, 
+        UltDMG = 325, 
+        HitsToUlt = 7, 
+        UltTicks = 2, 
+        TickDelay = 0.55
+    }, 
+    AntQueen = {
+        Name = "Ant Queen", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://73358558923030", 
+        ImageOff = "rbxassetid://87997367032617", 
+        Area = 1, 
+        HitDMG = 152, 
+        UltDMG = 1125, 
+        HitsToUlt = 7, 
+        UltTicks = 5, 
+        TickDelay = 0.5
+    }, 
+    Beru = {
+        Name = "Ziru", 
+        Rarity = "Legendary", 
+        Image = "rbxassetid://118102358638644", 
+        ImageOff = "rbxassetid://88025177191763", 
+        Area = 1, 
+        HitDMG = 500, 
+        UltDMG = 3500, 
+        HitsToUlt = 7, 
+        UltTicks = 4, 
+        TickDelay = 0.3
+    }, 
+    Orochimaru = {
+        Name = "Snake Man", 
+        Rarity = "Common", 
+        Image = "rbxassetid://118834985644786", 
+        ImageOff = "rbxassetid://117516665184536", 
+        Area = 2, 
+        HitDMG = 43, 
+        UltDMG = 354, 
+        HitsToUlt = 7, 
+        UltTicks = 3, 
+        TickDelay = 0.55
+    }, 
+    Sakura = {
+        Name = "Blossom", 
+        Rarity = "Common", 
+        Image = "rbxassetid://85463295750056", 
+        ImageOff = "rbxassetid://134301892727245", 
+        Area = 2, 
+        HitDMG = 51, 
+        UltDMG = 412, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.75
+    }, 
+    Itachi = {
+        Name = "Black Crow", 
+        Rarity = "Common", 
+        Image = "rbxassetid://129187553444710", 
+        ImageOff = "rbxassetid://129489572826369", 
+        Area = 2, 
+        HitDMG = 64, 
+        UltDMG = 484, 
+        HitsToUlt = 7, 
+        UltTicks = 6, 
+        TickDelay = 0.25
+    }, 
+    Pain = {
+        Name = "Dor", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://88039038571553", 
+        ImageOff = "rbxassetid://72997743229819", 
+        Area = 2, 
+        HitDMG = 192, 
+        UltDMG = 1452, 
+        HitsToUlt = 7, 
+        UltTicks = 2, 
+        TickDelay = 0.55
+    }, 
+    Naruto = {
+        Name = "Baruto", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://126333146231735", 
+        ImageOff = "rbxassetid://104798380738079", 
+        Area = 2, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 2, 
+        TickDelay = 0.55
+    }, 
+    Madara = {
+        Name = "Gadara", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://87780484369985", 
+        ImageOff = "rbxassetid://129536708013547", 
+        Area = 2, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 2, 
+        TickDelay = 0.55, 
+        AnimationType = "WeaponLeft", 
+        HaveWeapon = true
+    }, 
+    Arlong = {
+        Name = "Shark Man", 
+        Rarity = "Common", 
+        Image = "rbxassetid://79871264696421", 
+        ImageOff = "rbxassetid://84555585127423", 
+        Area = 3, 
+        HitDMG = 72, 
+        UltDMG = 512, 
+        HitsToUlt = 7, 
+        UltTicks = 2, 
+        TickDelay = 0.55, 
+        AnimationType = "WeaponRight", 
+        HaveWeapon = true
+    }, 
+    Enel = {
+        Name = "Eminel", 
+        Rarity = "Common", 
+        Image = "rbxassetid://98239340301450", 
+        ImageOff = "rbxassetid://105241758647614", 
+        Area = 3, 
+        HitDMG = 89, 
+        UltDMG = 593, 
+        HitsToUlt = 7, 
+        UltTicks = 2, 
+        TickDelay = 0.55
+    }, 
+    Kizaru = {
+        Name = "Light Admiral", 
+        Rarity = "Common", 
+        Image = "rbxassetid://126242936525296", 
+        ImageOff = "rbxassetid://76800009000371", 
+        Area = 3, 
+        HitDMG = 100, 
+        UltDMG = 658, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 1.35
+    }, 
+    Mihalk = {
+        Name = "Mifalcon", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://107612577565451", 
+        ImageOff = "rbxassetid://107932077826404", 
+        Area = 3, 
+        HitDMG = 300, 
+        UltDMG = 1974, 
+        HitsToUlt = 7, 
+        UltTicks = 3, 
+        TickDelay = 0.4, 
+        AnimationType = "WeaponRight", 
+        HaveWeapon = true
+    }, 
+    Luffy = {
+        Name = "Bluffy", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://120787975949193", 
+        ImageOff = "rbxassetid://102115141783142", 
+        Area = 4, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.55
+    }, 
+    Ace = {
+        Name = "Spade", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://132741345296666", 
+        ImageOff = "rbxassetid://85428734465756", 
+        Area = 4, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 1.85
+    }, 
+    Uryu = {
+        Name = "Luryu", 
+        Rarity = "Common", 
+        Image = "rbxassetid://126095804967650", 
+        ImageOff = "rbxassetid://89030697829621", 
+        Area = 4, 
+        HitDMG = 118, 
+        UltDMG = 715, 
+        HitsToUlt = 7, 
+        UltTicks = 15, 
+        TickDelay = 0.1
+    }, 
+    Byakuya = {
+        Name = "Fyakuya", 
+        Rarity = "Common", 
+        Image = "rbxassetid://126843178605790", 
+        ImageOff = "rbxassetid://107682272966175", 
+        Area = 4, 
+        HitDMG = 132, 
+        UltDMG = 786, 
+        HitsToUlt = 7, 
+        UltTicks = 15, 
+        TickDelay = 0.125, 
+        AnimationType = "WeaponRight", 
+        HaveWeapon = true
+    }, 
+    Renji = {
+        Name = "Genji", 
+        Rarity = "Common", 
+        Image = "rbxassetid://82883603953217", 
+        ImageOff = "rbxassetid://94799771078061", 
+        Area = 4, 
+        HitDMG = 150, 
+        UltDMG = 847, 
+        HitsToUlt = 7, 
+        UltTicks = 2, 
+        TickDelay = 0.35, 
+        AnimationType = "WeaponRight", 
+        HaveWeapon = true
+    }, 
+    Ulquiorra = {
+        Name = "Murcielago", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://113839395346393", 
+        ImageOff = "rbxassetid://89728628972614", 
+        Area = 3, 
+        HitDMG = 450, 
+        UltDMG = 2541, 
+        HitsToUlt = 7, 
+        UltTicks = 6, 
+        TickDelay = 0.55
+    }, 
+    Ichigo = {
+        Name = "Sango", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://76889954679021", 
+        ImageOff = "rbxassetid://134523813870102", 
+        Area = 3, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 2, 
+        TickDelay = 0.55, 
+        AnimationType = "WeaponRight", 
+        HaveWeapon = true
+    }, 
+    Aizen = {
+        Name = "Baizen", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://109899462635904", 
+        ImageOff = "rbxassetid://117553936713386", 
+        Area = 3, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 2, 
+        TickDelay = 0.55
+    }, 
+    Yhwach = {
+        Name = "Watch", 
+        Rarity = "Legendary", 
+        Image = "rbxassetid://97471965633740", 
+        ImageOff = "rbxassetid://139675221761579", 
+        Area = 3, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 2, 
+        TickDelay = 0.55
+    }, 
+    Luck = {
+        Name = "Sortudo", 
+        Rarity = "Common", 
+        Image = "rbxassetid://80858683521623", 
+        ImageOff = "rbxassetid://72613290761573", 
+        Area = 5, 
+        HitDMG = 193, 
+        UltDMG = 998, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 1.35
+    }, 
+    Noelle = {
+        Name = "Michille", 
+        Rarity = "Common", 
+        Image = "rbxassetid://89371477242358", 
+        ImageOff = "rbxassetid://73103397505958", 
+        Area = 5, 
+        HitDMG = 212, 
+        UltDMG = 1075, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.8
+    }, 
+    Yuno = {
+        Name = "Wind", 
+        Rarity = "Common", 
+        Image = "rbxassetid://99287135812683", 
+        ImageOff = "rbxassetid://121361520216985", 
+        Area = 5, 
+        HitDMG = 265, 
+        UltDMG = 1254, 
+        HitsToUlt = 7, 
+        UltTicks = 8, 
+        TickDelay = 0.3
+    }, 
+    Julius = {
+        Name = "Time King", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://114434346910180", 
+        ImageOff = "rbxassetid://82697887151285", 
+        Area = 5, 
+        HitDMG = 600, 
+        UltDMG = 4150, 
+        HitsToUlt = 7, 
+        UltTicks = 5, 
+        TickDelay = 0.4
+    }, 
+    Asta = {
+        Name = "Asta", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://90480269220633", 
+        ImageOff = "rbxassetid://129246592862089", 
+        Area = 5, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.55
+    }, 
+    Yami = {
+        Name = "Yami", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://133923636580424", 
+        ImageOff = "rbxassetid://125998643025264", 
+        Area = 5, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 3, 
+        TickDelay = 0.4
+    }, 
+    Angel = {
+        Name = "Heaven", 
+        Rarity = "Common", 
+        Image = "rbxassetid://87697012864980", 
+        ImageOff = "rbxassetid://135836402520504", 
+        Area = 6, 
+        HitDMG = 315, 
+        UltDMG = 1575, 
+        HitsToUlt = 7, 
+        UltTicks = 22, 
+        TickDelay = 0.1, 
+        AnimationType = "WeaponRight", 
+        HaveWeapon = true
+    }, 
+    Reze = {
+        Name = "Zere", 
+        Rarity = "Common", 
+        Image = "rbxassetid://81287998215373", 
+        ImageOff = "rbxassetid://85945100108655", 
+        Area = 6, 
+        HitDMG = 372, 
+        UltDMG = 1860, 
+        HitsToUlt = 7, 
+        UltTicks = 12, 
+        TickDelay = 0.1
+    }, 
+    Aki = {
+        Name = "Ika", 
+        Rarity = "Common", 
+        Image = "rbxassetid://102731521014741", 
+        ImageOff = "rbxassetid://121616783245882", 
+        Area = 6, 
+        HitDMG = 417, 
+        UltDMG = 2070, 
+        HitsToUlt = 7, 
+        UltTicks = 10, 
+        TickDelay = 0.12, 
+        AnimationType = "WeaponRight", 
+        HaveWeapon = true
+    }, 
+    Denji = {
+        Name = "Chainsaw", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://123800699010692", 
+        ImageOff = "rbxassetid://126666081613205", 
+        Area = 6, 
+        HitDMG = 765, 
+        UltDMG = 5155, 
+        HitsToUlt = 7, 
+        UltTicks = 18, 
+        TickDelay = 0.1
+    }, 
+    Makima = {
+        Name = "Makima", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://125653024075024", 
+        ImageOff = "rbxassetid://97144037866686", 
+        Area = 6, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 3, 
+        TickDelay = 0.4
+    }, 
+    Power = {
+        Name = "Power", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://125635397132158", 
+        ImageOff = "rbxassetid://132349743630715", 
+        Area = 6, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 1.85
+    }, 
+    Diavolo = {
+        Name = "Diablo", 
+        Rarity = "Common", 
+        Image = "rbxassetid://138682559488178", 
+        ImageOff = "rbxassetid://85454461068537", 
+        Area = 7, 
+        HitDMG = 487, 
+        UltDMG = 2435, 
+        HitsToUlt = 7, 
+        UltTicks = 7, 
+        TickDelay = 0.3, 
+        HaveStand = true, 
+        StandIdle = "rbxassetid://136985872335838", 
+        StandWalk = "rbxassetid://98941256430771"
+    }, 
+    Josuke = {
+        Name = "Gosuke", 
+        Rarity = "Common", 
+        Image = "rbxassetid://117640540539249", 
+        ImageOff = "rbxassetid://128242297026460", 
+        Area = 7, 
+        HitDMG = 568, 
+        UltDMG = 2840, 
+        HitsToUlt = 7, 
+        UltTicks = 8, 
+        TickDelay = 0.15, 
+        HaveStand = true, 
+        StandIdle = "rbxassetid://105178428106061", 
+        StandWalk = "rbxassetid://98941256430771"
+    }, 
+    Jolyne = {
+        Name = "Golyne", 
+        Rarity = "Common", 
+        Image = "rbxassetid://115364899308897", 
+        ImageOff = "rbxassetid://92993055662271", 
+        Area = 7, 
+        HitDMG = 647, 
+        UltDMG = 3235, 
+        HitsToUlt = 7, 
+        UltTicks = 8, 
+        TickDelay = 0.3, 
+        HaveStand = true, 
+        StandIdle = "rbxassetid://79026643543239", 
+        StandWalk = "rbxassetid://98941256430771"
+    }, 
+    Pucci = {
+        Name = "Gucci", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://72858700577127", 
+        ImageOff = "rbxassetid://81790146426077", 
+        Area = 7, 
+        HitDMG = 928, 
+        UltDMG = 6396, 
+        HitsToUlt = 7, 
+        UltTicks = 15, 
+        TickDelay = 0.2, 
+        HaveStand = true, 
+        StandIdle = "rbxassetid://101721004911535", 
+        StandWalk = "rbxassetid://98941256430771"
+    }, 
+    Jotaro = {
+        Name = "Jotaro", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://75642158835719", 
+        ImageOff = "rbxassetid://94973249368082", 
+        Area = 7, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.55, 
+        HaveStand = true, 
+        StandIdle = "rbxassetid://97953659652796", 
+        StandWalk = "rbxassetid://98941256430771"
+    }, 
+    Dio = {
+        Name = "Dio", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://76755016421598", 
+        ImageOff = "rbxassetid://98941256430771", 
+        Area = 7, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 3, 
+        TickDelay = 0.4, 
+        HaveStand = true, 
+        StandIdle = "rbxassetid://138049448633339", 
+        StandWalk = "rbxassetid://98941256430771"
+    }, 
+    DioOverHeaven = {
+        Name = "DioOverHeaven", 
+        Rarity = "Legendary", 
+        Image = "rbxassetid://138601404764352", 
+        ImageOff = "rbxassetid://81329103459331", 
+        Area = 7, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.55, 
+        HaveStand = true, 
+        StandIdle = "rbxassetid://139300392324708", 
+        StandWalk = "rbxassetid://98941256430771"
+    }, 
+    Genos = {
+        Name = "Genos", 
+        Rarity = "Common", 
+        Image = "rbxassetid://79766928858773", 
+        ImageOff = "rbxassetid://106347033503080", 
+        Area = 8, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 1.35
+    }, 
+    Tornado = {
+        Name = "Tornado", 
+        Rarity = "Common", 
+        Image = "rbxassetid://126138839369014", 
+        ImageOff = "rbxassetid://89583618342846", 
+        Area = 8, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.8
+    }, 
+    Mumem = {
+        Name = "MumemRider", 
+        Rarity = "Common", 
+        Image = "rbxassetid://128378128442053", 
+        ImageOff = "rbxassetid://74253859300828", 
+        Area = 8, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 8, 
+        TickDelay = 0.3
+    }, 
+    Saitama = {
+        Name = "Saitama", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://139239878579790", 
+        ImageOff = "rbxassetid://109882019154618", 
+        Area = 8, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.55
+    }, 
+    Garou = {
+        Name = "Garou", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://79042830449144", 
+        ImageOff = "rbxassetid://138160380999074", 
+        Area = 8, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 3, 
+        TickDelay = 0.4
+    }, 
+    Boros = {
+        Name = "Boros", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://85018405738633", 
+        ImageOff = "rbxassetid://82424358742833", 
+        Area = 8, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 1.85
+    }, 
+    Kame = {
+        Name = "Kame", 
+        Rarity = "Common", 
+        Image = "rbxassetid://70798111519068", 
+        ImageOff = "rbxassetid://101339068683777", 
+        Area = 9, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 1.35
+    }, 
+    Piccolo = {
+        Name = "Piccolo", 
+        Rarity = "Common", 
+        Image = "rbxassetid://75921494166975", 
+        ImageOff = "rbxassetid://88613022012062", 
+        Area = 9, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.8
+    }, 
+    Cell = {
+        Name = "Cell", 
+        Rarity = "Common", 
+        Image = "rbxassetid://109405597823060", 
+        ImageOff = "rbxassetid://139194963960508", 
+        Area = 9, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 8, 
+        TickDelay = 0.3
+    }, 
+    Goku = {
+        Name = "Goku", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://140500331554825", 
+        ImageOff = "rbxassetid://103206934966957", 
+        Area = 9, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.55
+    }, 
+    Beerus = {
+        Name = "Beerus", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://139031693510403", 
+        ImageOff = "rbxassetid://108788867838814", 
+        Area = 9, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 3, 
+        TickDelay = 0.4
+    }, 
+    Freeza = {
+        Name = "Freeza", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://108110727195816", 
+        ImageOff = "rbxassetid://140433550226931", 
+        Area = 9, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 1.85
+    }, 
+    VegetaEgo = {
+        Name = "VegetaEgo", 
+        Rarity = "Legendary", 
+        Image = "rbxassetid://92052320943642", 
+        ImageOff = "rbxassetid://93351025370723", 
+        Area = 9, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.55
+    }, 
+    Killua = {
+        Name = "Killua", 
+        Rarity = "Common", 
+        Image = "rbxassetid://96036756631384", 
+        ImageOff = "rbxassetid://81295732938594", 
+        Area = 10, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 1.35
+    }, 
+    Hisoka = {
+        Name = "Hisoka", 
+        Rarity = "Common", 
+        Image = "rbxassetid://121896129882023", 
+        ImageOff = "rbxassetid://104646165972899", 
+        Area = 10, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.8
+    }, 
+    Pitou = {
+        Name = "Pitou", 
+        Rarity = "Common", 
+        Image = "rbxassetid://95358385742771", 
+        ImageOff = "rbxassetid://138478950108836", 
+        Area = 10, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 8, 
+        TickDelay = 0.3
+    }, 
+    Gon = {
+        Name = "Gon", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://84081575282225", 
+        ImageOff = "rbxassetid://124635843082914", 
+        Area = 10, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.55
+    }, 
+    Meruem = {
+        Name = "Meruem", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://78782228803078", 
+        ImageOff = "rbxassetid://78756279508251", 
+        Area = 10, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 3, 
+        TickDelay = 0.4
+    }, 
+    Netero = {
+        Name = "Netero", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://75701987215211", 
+        ImageOff = "rbxassetid://127256573673819", 
+        Area = 10, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 1.85
+    }, 
+    Seiko = {
+        Name = "Seiko", 
+        Rarity = "Common", 
+        Image = "rbxassetid://78951967545714", 
+        ImageOff = "rbxassetid://114405197920259", 
+        Area = 11, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 1.35
+    }, 
+    Serpo = {
+        Name = "Serpo", 
+        Rarity = "Common", 
+        Image = "rbxassetid://97732302229347", 
+        ImageOff = "rbxassetid://104657081383917", 
+        Area = 11, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.8
+    }, 
+    Aira = {
+        Name = "Aira", 
+        Rarity = "Common", 
+        Image = "rbxassetid://136913687054358", 
+        ImageOff = "rbxassetid://129525286123303", 
+        Area = 11, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 8, 
+        TickDelay = 0.3
+    }, 
+    Okarun = {
+        Name = "Okarun", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://94048936578858", 
+        ImageOff = "rbxassetid://131556174267922", 
+        Area = 11, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 0.55
+    }, 
+    Mantis = {
+        Name = "Mantis", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://108204812271712", 
+        ImageOff = "rbxassetid://97358037494342", 
+        Area = 11, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 3, 
+        TickDelay = 0.4
+    }, 
+    Momo = {
+        Name = "Momo", 
+        Rarity = "Epic", 
+        Image = "rbxassetid://121473031879783", 
+        ImageOff = "rbxassetid://99291112549655", 
+        Area = 11, 
+        HitDMG = 1.25, 
+        UltDMG = 10, 
+        HitsToUlt = 7, 
+        UltTicks = 1, 
+        TickDelay = 1.85
+    }
+};
+local v1 = {
+    Name = "Default", 
+    Rarity = "Common", 
+    Image = "", 
+    ImageOff = "rbxassetid://14801568938", 
+    Area = 1, 
+    HitDMG = 1, 
+    UltDMG = 10, 
+    AtkSPD = 0.6, 
+    WalkSPD = 40, 
+    HitsToUlt = 6, 
+    Price = 100, 
+    AnimationType = "Default", 
+    UltTicks = 10, 
+    TickDelay = 0.3, 
+    DamageDelay = 0
+};
+for _, v3 in next, v0 do
+    for v4, v5 in next, v1 do
+        if v3[v4] == nil then
+            v3[v4] = v5;
+        end;
+    end;
+end;
+return v0;
