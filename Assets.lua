@@ -17,7 +17,7 @@ local v0 = {
 	},
 	Ticket2 = {
 		Name = "+5 Tickets",
-		Image = ">:Ticket2:1357014160956981340>"
+		Image = "<:Ticket2:1357014160956981340>"
 	},
 	Ticket3 = {
 		Name = "+8 Tickets",
