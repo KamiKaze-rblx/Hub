@@ -3,15 +3,11 @@ local v0 = {
 		Name = "Leveling City",
 		Text = "<font color="#00ffff" weight="heavy">[DUNGEON] DUNGEON SPAWNED IN Leveling City!</font>"
 	},
-	2 = {
-		Name = "+100 Gems",
+	[2] = {
+		Name = "Grass Village",
 		Text = "<font color="#00ffff" weight="heavy">[DUNGEON] DUNGEON SPAWNED IN Grass Village!</font>"
 	},
-	3 = {
-		Name = "+100 Gems",
-		Text = "<font color="#00ffff" weight="heavy">[DUNGEON] DUNGEON SPAWNED IN Grass Village!</font>"
-	},
-	4 = {
+	[3] = {
 		Name = "Brum Island",
 		Text = "<font color="#00ffff" weight="heavy">[DUNGEON] DUNGEON SPAWNED IN Brum Island!</font>"
 	},
