@@ -28,5 +28,5 @@ local v0 = {
 		Text = "<font color="#00ffff" weight="heavy">[DUNGEON] DUNGEON SPAWNED IN Mori Town!</font>"
 	}
 };
-
+ 
 return v0;
