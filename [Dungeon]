@@ -1,5 +1,5 @@
 local v0 = {
-	1 = {
+	LevelingCity = {
 		Name = "Leveling City",
 		Text = "<font color="#00ffff" weight="heavy">[DUNGEON] DUNGEON SPAWNED IN Leveling City!</font>"
 	},
