@@ -1,0 +1,787 @@
+local module = {
+	SoloWorld = {
+		Items = {
+			-- Currency
+			Coins = {
+				Name = "Cash",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 99,
+				Icon = "rbxassetid://94131355740709"
+			},
+			Gems = {
+				Name = "Gems",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 98,
+				Icon = "rbxassetid://80879946928667"
+			},
+
+			-- Weapons
+			DualKando = {
+				Name = "DualKando",
+				Amount = "1",
+				Chance = 400,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://120675730326685"
+			},
+			DualSteelNaginata = {
+				Name = "DualSteelNaginata",
+				Amount = "1",
+				Chance = 200,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://120675730326685"
+			},
+			WyvernSlayer = {
+				Name = "WyvernSlayer",
+				Amount = "1",
+				Chance = 150,
+				Type = "Weapons",
+				Level = 3,
+				Rarity = "Rare",
+				OnlyBoss = true,
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://120675730326685"
+			},
+
+			-- Boss Drops
+			Igris = {
+				Name = "Vermillion",
+				Amount = "1",
+				Type = "Shadow",
+				Rarity = "Epic",
+				Order = -5993434,
+				OnlyBoss = true,
+				Icon = "rbxassetid://120675730326685"
+			},
+
+			-- Runes
+			DgSoloRune = {
+				Name = "DgSoloRune",
+				Amount = "1",
+				Chance = 30,
+				Type = "Items",
+				Rarity = "Rare",
+				Icon = "rbxassetid://120675730326685"
+			}
+		},
+		EnemyPool = {"SL1", "SL2", "SL3", "SL4", "SL5", "SL6"},
+		MapPool = {"TrainStation", "DarkDungeon"},
+		Rejoin = {
+			Gems = 1000,
+			Tickets = 15
+		},
+		Boss = "Igris",
+		DoubleBoss = "JinWoo"
+	},
+
+	NarutoWorld = {
+		Items = {
+			-- Currency
+			Coins = {
+				Name = "Cash",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 99,
+				Icon = "rbxassetid://94131355740709"
+			},
+			Gems = {
+				Name = "Gems",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 98,
+				Icon = "rbxassetid://80879946928667"
+			},
+
+			-- Weapons
+			MonsterSlayer = {
+				Name = "MonsterSlayer",
+				Amount = "1",
+				Chance = 40,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://88039038571553"
+			},
+			MixedBattleAxe = {
+				Name = "MixedBattleAxe",
+				Amount = "1",
+				Chance = 20,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://88039038571553"
+			},
+			TrollSlayer = {
+				Name = "TrollSlayer",
+				Amount = "1",
+				Chance = 150,
+				Type = "Weapons",
+				Level = 3,
+				Rarity = "Rare",
+				OnlyBoss = true,
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://88039038571553"
+			},
+
+			-- Boss Drops
+			Pain = {
+				Name = "Dor",
+				Amount = "1",
+				Type = "Shadow",
+				Rarity = "Epic",
+				Order = -5993434,
+				OnlyBoss = true,
+				Icon = "rbxassetid://88039038571553"
+			},
+
+			-- Runes
+			DgNarutoRune = {
+				Name = "DgNarutoRune",
+				Amount = "1",
+				Chance = 30,
+				Type = "Items",
+				Rarity = "Rare",
+				Icon = "rbxassetid://88039038571553"
+			}
+		},
+		EnemyPool = {"NR1", "NR2", "NR3"},
+		MapPool = {"DarkDungeon", "SnakeLab"},
+		Rejoin = {
+			Gems = 50000,
+			Tickets = 15
+		},
+		Boss = "Pain",
+		DoubleBoss = "JinWoo"
+	},
+
+	OPWorld = {
+		Items = {
+			-- Currency
+			Coins = {
+				Name = "Cash",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 99,
+				Icon = "rbxassetid://94131355740709"
+			},
+			Gems = {
+				Name = "Gems",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 98,
+				Icon = "rbxassetid://80879946928667"
+			},
+
+			-- Weapons
+			SteelSaber = {
+				Name = "SteelSaber",
+				Amount = "1",
+				Chance = 40,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://107612577565451"
+			},
+			SteelKando = {
+				Name = "SteelKando",
+				Amount = "1",
+				Chance = 20,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://107612577565451"
+			},
+			RuneSword = {
+				Name = "RuneSword",
+				Amount = "1",
+				Chance = 150,
+				Type = "Weapons",
+				Level = 3,
+				Rarity = "Rare",
+				OnlyBoss = true,
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://107612577565451"
+			},
+
+			-- Boss Drops
+			Mihalk = {
+				Name = "Mifalcon",
+				Amount = "1",
+				Type = "Shadow",
+				Rarity = "Epic",
+				Order = -5993434,
+				OnlyBoss = true,
+				Icon = "rbxassetid://107612577565451"
+			},
+
+			-- Runes
+			DgOPRune = {
+				Name = "DgOPRune",
+				Amount = "1",
+				Chance = 30,
+				Type = "Items",
+				Rarity = "Rare",
+				Icon = "rbxassetid://107612577565451"
+			}
+		},
+		EnemyPool = {"OP1", "OP2", "OP3"},
+		MapPool = {"DarkDungeon", "ImpelDown"},
+		Rejoin = {
+			Gems = 750000,
+			Tickets = 15
+		},
+		Boss = "Mihalk",
+		DoubleBoss = "JinWoo"
+	},
+
+	BleachWorld = {
+		Items = {
+			-- Currency
+			Coins = {
+				Name = "Cash",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 99,
+				Icon = "rbxassetid://94131355740709"
+			},
+			Gems = {
+				Name = "Gems",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 98,
+				Icon = "rbxassetid://80879946928667"
+			},
+
+			-- Weapons
+			BoneMace = {
+				Name = "BoneMace",
+				Amount = "1",
+				Chance = 60,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://113839395346393"
+			},
+			GreatSaber = {
+				Name = "GreatSaber",
+				Amount = "1",
+				Chance = 30,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://113839395346393"
+			},
+			SteelScythe = {
+				Name = "SteelScythe",
+				Amount = "1",
+				Chance = 100,
+				Type = "Weapons",
+				Level = 3,
+				Rarity = "Rare",
+				OnlyBoss = true,
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://113839395346393"
+			},
+
+			-- Boss Drops
+			Ulquiorra = {
+				Name = "Murcielago",
+				Amount = "1",
+				Type = "Shadow",
+				Rarity = "Epic",
+				Order = -5993434,
+				OnlyBoss = true,
+				Icon = "rbxassetid://113839395346393"
+			},
+
+			-- Runes
+			DgBleachRune = {
+				Name = "DgBleachRune",
+				Amount = "1",
+				Chance = 30,
+				Type = "Items",
+				Rarity = "Rare",
+				Icon = "rbxassetid://113839395346393"
+			}
+		},
+		EnemyPool = {"BL1", "BL2", "BL3"},
+		MapPool = {"DarkDungeon", "SoulSociety"},
+		Rejoin = {
+			Gems = 80000000,
+			Tickets = 15
+		},
+		Boss = "Ulquiorra",
+		DoubleBoss = "JinWoo"
+	},
+
+	BCWorld = {
+		Items = {
+			-- Currency
+			Coins = {
+				Name = "Cash",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 99,
+				Icon = "rbxassetid://94131355740709"
+			},
+			Gems = {
+				Name = "Gems",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 98,
+				Icon = "rbxassetid://80879946928667"
+			},
+
+			-- Weapons
+			StellKopesh = {
+				Name = "StellKopesh",
+				Amount = "1",
+				Chance = 60,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://114434346910180"
+			},
+			DualTrident = {
+				Name = "DualTrident",
+				Amount = "1",
+				Chance = 30,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://114434346910180"
+			},
+			DualWyvernSlayer = {
+				Name = "DualWyvernSlayer",
+				Amount = "1",
+				Chance = 120,
+				Type = "Weapons",
+				Level = 3,
+				Rarity = "Rare",
+				OnlyBoss = true,
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://114434346910180"
+			},
+
+			-- Boss Drops
+			Julius = {
+				Name = "Time King",
+				Amount = "1",
+				Type = "Shadow",
+				Rarity = "Epic",
+				Order = -5993434,
+				OnlyBoss = true,
+				Icon = "rbxassetid://114434346910180"
+			},
+
+			-- Runes
+			DgBCRune = {
+				Name = "DgBCRune",
+				Amount = "1",
+				Chance = 30,
+				Type = "Items",
+				Rarity = "Rare",
+				Icon = "rbxassetid://114434346910180"
+			}
+		},
+		EnemyPool = {"BC1", "BC2", "BC3"},
+		MapPool = {"DarkDungeon", "MagicDungeon"},
+		Rejoin = {
+			Gems = 10000000000,
+			Tickets = 15
+		},
+		Boss = "Julius",
+		DoubleBoss = "JinWoo"
+	},
+
+	ChainsawWorld = {
+		Items = {
+			-- Currency
+			Coins = {
+				Name = "Cash",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 99,
+				Icon = "rbxassetid://94131355740709"
+			},
+			Gems = {
+				Name = "Gems",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 98,
+				Icon = "rbxassetid://80879946928667"
+			},
+
+			-- Weapons
+			ObsidianDualAxe2 = {
+				Name = "ObsidianDualAxe2",
+				Amount = "1",
+				Chance = 60,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://123800699010692"
+			},
+			DualDivineAxe2 = {
+				Name = "DualDivineAxe2",
+				Amount = "1",
+				Chance = 30,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://123800699010692"
+			},
+			DualOzSword2 = {
+				Name = "DualOzSword2",
+				Amount = "1",
+				Chance = 120,
+				Type = "Weapons",
+				Level = 3,
+				Rarity = "Rare",
+				OnlyBoss = true,
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://123800699010692"
+			},
+
+			-- Boss Drops
+			Denji = {
+				Name = "Chainsaw",
+				Amount = "1",
+				Type = "Shadow",
+				Rarity = "Epic",
+				Order = -5993434,
+				OnlyBoss = true,
+				Icon = "rbxassetid://123800699010692"
+			},
+
+			-- Runes
+			DgChainsawRune = {
+				Name = "DgChainsawRune",
+				Amount = "1",
+				Chance = 30,
+				Type = "Items",
+				Rarity = "Rare",
+				Icon = "rbxassetid://123800699010692"
+			}
+		},
+		EnemyPool = {"CH1", "CH2", "CH3"},
+		MapPool = {"DarkDungeon", "Hotel"},
+		Rejoin = {
+			Gems = 840000000000,
+			Tickets = 15
+		},
+		Boss = "Denji",
+		DoubleBoss = "JinWoo"
+	},
+
+	JojoWorld = {
+		Items = {
+			-- Currency
+			Coins = {
+				Name = "Cash",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 99,
+				Icon = "rbxassetid://94131355740709"
+			},
+			Gems = {
+				Name = "Gems",
+				Amount = "1",
+				Type = "Currency",
+				Rarity = "Common",
+				Order = 98,
+				Icon = "rbxassetid://80879946928667"
+			},
+
+			-- Weapons
+			DualGemStaffs2 = {
+				Name = "DualGemStaffs2",
+				Amount = "1",
+				Chance = 60,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://72858700577127"
+			},
+			SlayerScythe2 = {
+				Name = "SlayerScythe2",
+				Amount = "1",
+				Chance = 30,
+				Type = "Weapons",
+				Level = 2,
+				Rarity = "Uncommon",
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://72858700577127"
+			},
+			DualRuneSword2 = {
+				Name = "DualRuneSword2",
+				Amount = "1",
+				Chance = 120,
+				Type = "Weapons",
+				Level = 3,
+				Rarity = "Rare",
+				OnlyBoss = true,
+				Favorite = false,
+				Enchanted = false,
+				Enchants = {},
+				Icon = "rbxassetid://72858700577127"
+			},
+
+			-- Boss Drops
+			Pucci = {
+				Name = "Gucci",
+				Amount = "1",
+				Type = "Shadow",
+				Rarity = "Epic",
+				Order = -5993434,
+				OnlyBoss = true,
+				Icon = "rbxassetid://72858700577127"
+			},
+
+			-- Runes
+			DgJojoRune = {
+				Name = "DgJojoRune",
+				Amount = "1",
+				Chance = 30,
+				Type = "Items",
+				Rarity = "Rare",
+				Icon = "rbxassetid://72858700577127"
+			}
+		},
+		EnemyPool = {"JB1", "JB2", "JB3"},
+		MapPool = {"DarkDungeon", "Prison"},
+		Rejoin = {
+			Gems = 42000000000000,
+			Tickets = 15
+		},
+		Boss = "Pucci",
+		DoubleBoss = "JinWoo"
+	}
+}
+
+-- Add global drops to all worlds
+for _, world in next, module do
+	-- Tickets
+	world.Items.Ticket = {
+		Name = "Ticket",
+		Amount = "1-2",
+		Chance = 1000,
+		Type = "Items",
+		Rank = 1,
+		OnlyBoss = true,
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	world.Items.Ticket2 = {
+		Name = "Ticket",
+		Amount = "2-3",
+		Chance = 1000,
+		Type = "Items",
+		Rank = 2,
+		OnlyBoss = true,
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	world.Items.Ticket3 = {
+		Name = "Ticket",
+		Amount = "3-5",
+		Chance = 1000,
+		Type = "Items",
+		Rank = 3,
+		OnlyBoss = true,
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	world.Items.Ticket4 = {
+		Name = "Ticket",
+		Amount = "5-8",
+		Chance = 1000,
+		Type = "Items",
+		Rank = 4,
+		OnlyBoss = true,
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	world.Items.Ticket5 = {
+		Name = "Ticket",
+		Amount = "8-13",
+		Chance = 1000,
+		Type = "Items",
+		Rank = 5,
+		OnlyBoss = true,
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	world.Items.Ticket6 = {
+		Name = "Ticket",
+		Amount = "13-21",
+		Chance = 1000,
+		Type = "Items",
+		Rank = 6,
+		OnlyBoss = true,
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	world.Items.Ticket7 = {
+		Name = "Ticket",
+		Amount = "13-21",
+		Chance = 1000,
+		Type = "Items",
+		Rank = 7,
+		OnlyBoss = true,
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	-- [Add all other global drops...]
+
+	-- Rank Runes
+	world.Items.RankUpRune = {
+		Name = "Rank Up Rune",
+		Amount = "1",
+		Chance = 75,
+		Type = "Items",
+		Rank = 4,
+		OnlyBoss = true,
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	world.Items.RankDownRune = {
+		Name = "Rank Down Rune",
+		Amount = "1",
+		Chance = 75,
+		Type = "Items",
+		Rank = 1,
+		OnlyBoss = true,
+		Icon = "<:Igris:1358099382951739584>"
+	}
+
+	-- Powder Dusts
+	world.Items.CommonPowderDust = {
+		Name = "Common Powder Dust",
+		Amount = "1-3",
+		Chance = 90,
+		Type = "Items",
+		Rank = 1,
+		OnDestroy = true,
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	world.Items.CommonPowderDust2 = {
+		Name = "Common Powder Dust",
+		Amount = "2-4";
+		Chance = 90;
+		Type = "Items";
+		Rank = 2;
+		OnDestroy = true;
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	world.Items.RarePowderDust = {
+		Name = "Rare Powder Dust",
+		Amount = "1-3",
+		Chance = 65,
+		Type = "Items",
+		Rank = 3,
+		OnDestroy = true,
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	world.Items.RarePowderDust2 = {
+		Name = "Rare Powder Dust",
+		Amount = "2-4";
+		Chance = 75;
+		Type = "Items";
+		Rank = 4;
+		OnDestroy = true;
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	world.Items.LegendaryPowderDust = {
+		Name = "Legendary Powder Dust",
+		Amount = "1-2",
+		Chance = 20,
+		Type = "Items",
+		Rank = 5,
+		OnDestroy = true,
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	world.Items.LegendaryPowderDust2 = {
+		Name = "Legendary Powder Dust",
+		Amount = "2-4";
+		Chance = 30;
+		Type = "Items";
+		Rank = 6;
+		OnDestroy = true;
+		Icon = "<:Igris:1358099382951739584>"
+	}
+	world.Items.LegendaryPowderDust3 = {
+		Name = "Legendary Powder Dust",
+		Amount = "2-4";
+		Chance = 30;
+		Type = "Items";
+		Rank = 7;
+		OnDestroy = true;
+		Icon = "<:Igris:1358099382951739584>"
+	}
+end
+
+return module
