@@ -588,7 +588,7 @@ for _, world in next, module do
 		Name = "Ticket",
 		Amount = "1-2",
 		Chance = 1000,
-		Type = "Items",
+		Type = "Currency",
 		Rank = 1,
 		OnlyBoss = true,
 		Icon = "<:Ticket1:1357014159434453124>"
@@ -597,7 +597,7 @@ for _, world in next, module do
 		Name = "Ticket",
 		Amount = "2-3",
 		Chance = 1000,
-		Type = "Items",
+		Type = "Currency",
 		Rank = 2,
 		OnlyBoss = true,
 		Icon = "<:Ticket1:1357014159434453124>"
@@ -606,7 +606,7 @@ for _, world in next, module do
 		Name = "Ticket",
 		Amount = "3-5",
 		Chance = 1000,
-		Type = "Items",
+		Type = "Currency",
 		Rank = 3,
 		OnlyBoss = true,
 		Icon = "<:Ticket1:1357014159434453124>"
@@ -615,7 +615,7 @@ for _, world in next, module do
 		Name = "Ticket",
 		Amount = "5-8",
 		Chance = 1000,
-		Type = "Items",
+		Type = "Currency",
 		Rank = 4,
 		OnlyBoss = true,
 		Icon = "<:Ticket2:1357014160956981340>"
@@ -624,7 +624,7 @@ for _, world in next, module do
 		Name = "Ticket",
 		Amount = "8-13",
 		Chance = 1000,
-		Type = "Items",
+		Type = "Currency",
 		Rank = 5,
 		OnlyBoss = true,
 		Icon = "<:Ticket2:1357014160956981340>"
@@ -633,7 +633,7 @@ for _, world in next, module do
 		Name = "Ticket",
 		Amount = "13-21",
 		Chance = 1000,
-		Type = "Items",
+		Type = "Currency",
 		Rank = 6,
 		OnlyBoss = true,
 		Icon = "<:TicketBag:1357014162999611442>"
@@ -642,7 +642,7 @@ for _, world in next, module do
 		Name = "Ticket",
 		Amount = "13-21",
 		Chance = 1000,
-		Type = "Items",
+		Type = "Currency",
 		Rank = 7,
 		OnlyBoss = true,
 		Icon = "<:TicketBag:1357014162999611442>"
