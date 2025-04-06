@@ -19,7 +19,7 @@ local module = {
 
 			-- Weapons
 			DualKando = {
-				Name = "DualKando",
+				Name = "Twin Kando Blades",
 				Chance = 400,
 				Type = "Weapons",
 				Level = 2,
@@ -27,10 +27,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:TwinKandoBlades:1358582991429046514>"
 			},
 			DualSteelNaginata = {
-				Name = "DualSteelNaginata",
+				Name = "Twin Iron Naginatas",
 				Chance = 200,
 				Type = "Weapons",
 				Level = 2,
@@ -38,10 +38,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:TwinIronNaginatas:1358582656148836362>"
 			},
 			WyvernSlayer = {
-				Name = "WyvernSlayer",
+				Name = "Wyvern Vanquisher",
 				Chance = 150,
 				Type = "Weapons",
 				Level = 3,
@@ -50,7 +50,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:WyvernVanquisher:1358582233019187453>"
 			},
 
 			-- Boss Drops
@@ -102,7 +102,7 @@ local module = {
 
 			-- Weapons
 			MonsterSlayer = {
-				Name = "MonsterSlayer",
+				Name = "Beast Bane",
 				Chance = 40,
 				Type = "Weapons",
 				Level = 2,
@@ -110,10 +110,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:BeastBane:1358581534344478811>"
 			},
 			MixedBattleAxe = {
-				Name = "MixedBattleAxe",
+				Name = "Hybrid War Axe",
 				Chance = 20,
 				Type = "Weapons",
 				Level = 2,
@@ -121,10 +121,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:HybridWarAxe:1358581157868081173>"
 			},
 			TrollSlayer = {
-				Name = "TrollSlayer",
+				Name = "Troll Bane",
 				Chance = 150,
 				Type = "Weapons",
 				Level = 3,
@@ -133,7 +133,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:TrollBane:1358580815092514846>"
 			},
 
 			-- Boss Drops
@@ -143,7 +143,7 @@ local module = {
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:Dor:1358580399403569202>"
 			},
 
 			-- Runes
@@ -185,7 +185,7 @@ local module = {
 
 			-- Weapons
 			SteelSaber = {
-				Name = "SteelSaber",
+				Name = "Iron Saber",
 				Chance = 40,
 				Type = "Weapons",
 				Level = 2,
@@ -193,10 +193,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:IronSaber:1358579942459445351>"
 			},
 			SteelKando = {
-				Name = "SteelKando",
+				Name = "Iron Kando Blade",
 				Chance = 20,
 				Type = "Weapons",
 				Level = 2,
@@ -204,10 +204,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:IronKandoBlade:1358579576623730838>"
 			},
 			RuneSword = {
-				Name = "Runic Blade", -- 103689297962462
+				Name = "Runic Blade",
 				Chance = 150,
 				Type = "Weapons",
 				Level = 3,
@@ -226,7 +226,7 @@ local module = {
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:Mifalcon:1358579190710013972>"
 			},
 
 			-- Runes
@@ -434,7 +434,7 @@ local module = {
 
 			-- Weapons
 			ObsidianDualAxe2 = {
-				Name = "Obsidian Axe", -- 132983074010949
+				Name = "Obsidian Axe",
 				Chance = 60,
 				Type = "Weapons",
 				Level = 2,
@@ -442,7 +442,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:ObsidianAxe:1358578466886254784>"
 			},
 			DualDivineAxe2 = {
 				Name = "Twin Sacred Axes",
@@ -548,7 +548,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:TwinRunicBlades:1358575967173480679>" --98191425110495
+				Icon = "<:TwinRunicBlades:1358575967173480679>"
 			},
 
 			-- Boss Drops
@@ -558,7 +558,7 @@ local module = {
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "<:Igris:1358099382951739584>" -- 72858700577127
+				Icon = "<:Gucci:1358577975825793204>"
 			},
 
 			-- Runes
