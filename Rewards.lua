@@ -65,11 +65,11 @@ local module = {
 
 			-- Runes
 			DgSoloRune = {
-				Name = "DgSoloRune",
+				Name = "Solo Rune",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:SoloRune:1358475569649422386>"
 			}
 		},
 		EnemyPool = {"SL1", "SL2", "SL3", "SL4", "SL5", "SL6"},
@@ -148,11 +148,11 @@ local module = {
 
 			-- Runes
 			DgNarutoRune = {
-				Name = "DgNarutoRune",
+				Name = "Grass Rune",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:GrassRune:1358474708298760394>"
 			}
 		},
 		EnemyPool = {"NR1", "NR2", "NR3"},
@@ -231,11 +231,11 @@ local module = {
 
 			-- Runes
 			DgOPRune = {
-				Name = "DgOPRune",
+				Name = "Brum Rune",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:BrumRune:1358474227602427934>"
 			}
 		},
 		EnemyPool = {"OP1", "OP2", "OP3"},
@@ -314,11 +314,11 @@ local module = {
 
 			-- Runes
 			DgBleachRune = {
-				Name = "DgBleachRune",
+				Name = "Faceheal Rune",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:FacehealRune:1358474693086019614>"
 			}
 		},
 		EnemyPool = {"BL1", "BL2", "BL3"},
@@ -397,11 +397,11 @@ local module = {
 
 			-- Runes
 			DgBCRune = {
-				Name = "DgBCRune",
+				Name = "Lucky Rune",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:LuckyRune:1358474748639711566>"
 			}
 		},
 		EnemyPool = {"BC1", "BC2", "BC3"},
@@ -480,11 +480,11 @@ local module = {
 
 			-- Runes
 			DgChainsawRune = {
-				Name = "DgChainsawRune",
+				Name = "Nipon Rune",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:NiponRune:1358475531431182418>"
 			}
 		},
 		EnemyPool = {"CH1", "CH2", "CH3"},
@@ -563,11 +563,11 @@ local module = {
 
 			-- Runes
 			DgJojoRune = {
-				Name = "DgJojoRune",
+				Name = "Mori Rune",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:MoriRune:1358474771083563160>"
 			}
 		},
 		EnemyPool = {"JB1", "JB2", "JB3"},
@@ -657,7 +657,7 @@ for _, world in next, module do
 		Type = "Items",
 		Rank = 4,
 		OnlyBoss = true,
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:RankUpRune:1358475555661549730>"
 	}
 	world.Items.RankDownRune = {
 		Name = "Rank Down Rune",
@@ -666,7 +666,7 @@ for _, world in next, module do
 		Type = "Items",
 		Rank = 1,
 		OnlyBoss = true,
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:RankDownRune:1358475544672473108>"
 	}
 
 	-- Powder Dusts
