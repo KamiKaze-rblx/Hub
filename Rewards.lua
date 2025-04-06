@@ -216,7 +216,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:RunicBlade:1358568670569300048>"
 			},
 
 			-- Boss Drops
@@ -276,7 +276,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>" -- 93908798361937
+				Icon = "<:BoneCrusher:1358569337761300550>"
 			},
 			GreatSaber = {
 				Name = "Colossal Saber",
@@ -287,7 +287,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>" -- 116281173672114
+				Icon = "<:ColossalSaber:1358571262221484102>"
 			},
 			SteelScythe = {
 				Name = "Iron Scythe",
@@ -299,7 +299,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>" -- 78222396302451
+				Icon = "<:IronScythe:1358571727327592518>"
 			},
 
 			-- Boss Drops
@@ -309,7 +309,7 @@ local module = {
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "<:Igris:1358099382951739584>" -- 113839395346393
+				Icon = "<:Murcielago:1358572310616866986>"
 			},
 
 			-- Runes
@@ -359,7 +359,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>" -- 103837560108209
+				Icon = "<:SteelKhopesh:1358572800834666695>"
 			},
 			DualTrident = {
 				Name = "Twin Tridents",
@@ -370,7 +370,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>" -- 136082625557211
+				Icon = "<:TwinTridents:1358573121569034270>"
 			},
 			DualWyvernSlayer = {
 				Name = "Twin Wyvern Vanquishers",
@@ -382,7 +382,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>" -- 83337458574852
+				Icon = "<:TwinWyvernVanquishers:1358573375039082726>"
 			},
 
 			-- Boss Drops
@@ -392,7 +392,7 @@ local module = {
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "<:Igris:1358099382951739584>" -- 114434346910180
+				Icon = "<:TimeKing:1358573668858597526>"
 			},
 
 			-- Runes
@@ -445,7 +445,7 @@ local module = {
 				Icon = "<:Igris:1358099382951739584>"
 			},
 			DualDivineAxe2 = {
-				Name = "Twin Sacred Axes", -- 108802645426147
+				Name = "Twin Sacred Axes",
 				Chance = 30,
 				Type = "Weapons",
 				Level = 2,
@@ -453,10 +453,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:TwinSacredAxes:1358574160271638598>"
 			},
 			DualOzSword2 = {
-				Name = "Twin Oz Blades", -- 85807681094970
+				Name = "Twin Oz Blades",
 				Chance = 120,
 				Type = "Weapons",
 				Level = 3,
@@ -465,17 +465,17 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:TwinOzBlades:1358574416119988294>"
 			},
 
 			-- Boss Drops
 			Denji = {
-				Name = "Chainsaw", -- 123800699010692
+				Name = "Chainsaw",
 				Type = "Shadow",
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:Chainsaw:1358574892131553310>"
 			},
 
 			-- Runes
@@ -525,7 +525,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:TwinJeweledRods:1358576352814698593>"
 			},
 			SlayerScythe2 = {
 				Name = "Reaper's Scythe",
@@ -536,7 +536,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:ReapersScythe:1358576186715934740>"
 			},
 			DualRuneSword2 = {
 				Name = "Twin Runic Blades",
@@ -548,7 +548,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>" --98191425110495
+				Icon = "<:TwinRunicBlades:1358575967173480679>" --98191425110495
 			},
 
 			-- Boss Drops
