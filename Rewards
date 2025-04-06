@@ -4,25 +4,22 @@ local module = {
 			-- Currency
 			Coins = {
 				Name = "Cash",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 99,
-				Icon = "rbxassetid://94131355740709"
+				Icon = "<:ariseCoin1:1358100658388996216>"
 			},
 			Gems = {
 				Name = "Gems",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 98,
-				Icon = "rbxassetid://80879946928667"
+				Icon = "<:BlueGemPile:1357014156422811861>"
 			},
 
 			-- Weapons
 			DualKando = {
 				Name = "DualKando",
-				Amount = "1",
 				Chance = 400,
 				Type = "Weapons",
 				Level = 2,
@@ -30,11 +27,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://120675730326685"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			DualSteelNaginata = {
 				Name = "DualSteelNaginata",
-				Amount = "1",
 				Chance = 200,
 				Type = "Weapons",
 				Level = 2,
@@ -42,11 +38,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://120675730326685"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			WyvernSlayer = {
 				Name = "WyvernSlayer",
-				Amount = "1",
 				Chance = 150,
 				Type = "Weapons",
 				Level = 3,
@@ -55,28 +50,26 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://120675730326685"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Boss Drops
 			Igris = {
 				Name = "Vermillion",
-				Amount = "1",
 				Type = "Shadow",
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "rbxassetid://120675730326685"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Runes
 			DgSoloRune = {
 				Name = "DgSoloRune",
-				Amount = "1",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "rbxassetid://120675730326685"
+				Icon = "<:Igris:1358099382951739584>"
 			}
 		},
 		EnemyPool = {"SL1", "SL2", "SL3", "SL4", "SL5", "SL6"},
@@ -94,25 +87,22 @@ local module = {
 			-- Currency
 			Coins = {
 				Name = "Cash",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 99,
-				Icon = "rbxassetid://94131355740709"
+				Icon = "<:ariseCoin1:1358100658388996216>"
 			},
 			Gems = {
 				Name = "Gems",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 98,
-				Icon = "rbxassetid://80879946928667"
+				Icon = "<:BlueGemPile:1357014156422811861>"
 			},
 
 			-- Weapons
 			MonsterSlayer = {
 				Name = "MonsterSlayer",
-				Amount = "1",
 				Chance = 40,
 				Type = "Weapons",
 				Level = 2,
@@ -120,11 +110,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://88039038571553"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			MixedBattleAxe = {
 				Name = "MixedBattleAxe",
-				Amount = "1",
 				Chance = 20,
 				Type = "Weapons",
 				Level = 2,
@@ -132,11 +121,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://88039038571553"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			TrollSlayer = {
 				Name = "TrollSlayer",
-				Amount = "1",
 				Chance = 150,
 				Type = "Weapons",
 				Level = 3,
@@ -145,28 +133,26 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://88039038571553"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Boss Drops
 			Pain = {
 				Name = "Dor",
-				Amount = "1",
 				Type = "Shadow",
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "rbxassetid://88039038571553"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Runes
 			DgNarutoRune = {
 				Name = "DgNarutoRune",
-				Amount = "1",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "rbxassetid://88039038571553"
+				Icon = "<:Igris:1358099382951739584>"
 			}
 		},
 		EnemyPool = {"NR1", "NR2", "NR3"},
@@ -184,25 +170,22 @@ local module = {
 			-- Currency
 			Coins = {
 				Name = "Cash",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 99,
-				Icon = "rbxassetid://94131355740709"
+				Icon = "<:ariseCoin1:1358100658388996216>"
 			},
 			Gems = {
 				Name = "Gems",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 98,
-				Icon = "rbxassetid://80879946928667"
+				Icon = "<:BlueGemPile:1357014156422811861>"
 			},
 
 			-- Weapons
 			SteelSaber = {
 				Name = "SteelSaber",
-				Amount = "1",
 				Chance = 40,
 				Type = "Weapons",
 				Level = 2,
@@ -210,11 +193,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://107612577565451"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			SteelKando = {
 				Name = "SteelKando",
-				Amount = "1",
 				Chance = 20,
 				Type = "Weapons",
 				Level = 2,
@@ -222,11 +204,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://107612577565451"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			RuneSword = {
 				Name = "RuneSword",
-				Amount = "1",
 				Chance = 150,
 				Type = "Weapons",
 				Level = 3,
@@ -235,28 +216,26 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://107612577565451"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Boss Drops
 			Mihalk = {
 				Name = "Mifalcon",
-				Amount = "1",
 				Type = "Shadow",
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "rbxassetid://107612577565451"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Runes
 			DgOPRune = {
 				Name = "DgOPRune",
-				Amount = "1",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "rbxassetid://107612577565451"
+				Icon = "<:Igris:1358099382951739584>"
 			}
 		},
 		EnemyPool = {"OP1", "OP2", "OP3"},
@@ -274,25 +253,22 @@ local module = {
 			-- Currency
 			Coins = {
 				Name = "Cash",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 99,
-				Icon = "rbxassetid://94131355740709"
+				Icon = "<:ariseCoin1:1358100658388996216>"
 			},
 			Gems = {
 				Name = "Gems",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 98,
-				Icon = "rbxassetid://80879946928667"
+				Icon = "<:BlueGemPile:1357014156422811861>"
 			},
 
 			-- Weapons
 			BoneMace = {
 				Name = "BoneMace",
-				Amount = "1",
 				Chance = 60,
 				Type = "Weapons",
 				Level = 2,
@@ -300,11 +276,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://113839395346393"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			GreatSaber = {
 				Name = "GreatSaber",
-				Amount = "1",
 				Chance = 30,
 				Type = "Weapons",
 				Level = 2,
@@ -312,11 +287,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://113839395346393"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			SteelScythe = {
 				Name = "SteelScythe",
-				Amount = "1",
 				Chance = 100,
 				Type = "Weapons",
 				Level = 3,
@@ -325,28 +299,26 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://113839395346393"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Boss Drops
 			Ulquiorra = {
 				Name = "Murcielago",
-				Amount = "1",
 				Type = "Shadow",
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "rbxassetid://113839395346393"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Runes
 			DgBleachRune = {
 				Name = "DgBleachRune",
-				Amount = "1",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "rbxassetid://113839395346393"
+				Icon = "<:Igris:1358099382951739584>"
 			}
 		},
 		EnemyPool = {"BL1", "BL2", "BL3"},
@@ -364,25 +336,22 @@ local module = {
 			-- Currency
 			Coins = {
 				Name = "Cash",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 99,
-				Icon = "rbxassetid://94131355740709"
+				Icon = "<:ariseCoin1:1358100658388996216>"
 			},
 			Gems = {
 				Name = "Gems",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 98,
-				Icon = "rbxassetid://80879946928667"
+				Icon = "<:BlueGemPile:1357014156422811861>"
 			},
 
 			-- Weapons
 			StellKopesh = {
 				Name = "StellKopesh",
-				Amount = "1",
 				Chance = 60,
 				Type = "Weapons",
 				Level = 2,
@@ -390,11 +359,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://114434346910180"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			DualTrident = {
 				Name = "DualTrident",
-				Amount = "1",
 				Chance = 30,
 				Type = "Weapons",
 				Level = 2,
@@ -402,11 +370,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://114434346910180"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			DualWyvernSlayer = {
 				Name = "DualWyvernSlayer",
-				Amount = "1",
 				Chance = 120,
 				Type = "Weapons",
 				Level = 3,
@@ -415,28 +382,26 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://114434346910180"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Boss Drops
 			Julius = {
 				Name = "Time King",
-				Amount = "1",
 				Type = "Shadow",
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "rbxassetid://114434346910180"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Runes
 			DgBCRune = {
 				Name = "DgBCRune",
-				Amount = "1",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "rbxassetid://114434346910180"
+				Icon = "<:Igris:1358099382951739584>"
 			}
 		},
 		EnemyPool = {"BC1", "BC2", "BC3"},
@@ -454,25 +419,22 @@ local module = {
 			-- Currency
 			Coins = {
 				Name = "Cash",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 99,
-				Icon = "rbxassetid://94131355740709"
+				Icon = "<:ariseCoin1:1358100658388996216>"
 			},
 			Gems = {
 				Name = "Gems",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 98,
-				Icon = "rbxassetid://80879946928667"
+				Icon = "<:BlueGemPile:1357014156422811861>"
 			},
 
 			-- Weapons
 			ObsidianDualAxe2 = {
 				Name = "ObsidianDualAxe2",
-				Amount = "1",
 				Chance = 60,
 				Type = "Weapons",
 				Level = 2,
@@ -480,11 +442,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://123800699010692"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			DualDivineAxe2 = {
 				Name = "DualDivineAxe2",
-				Amount = "1",
 				Chance = 30,
 				Type = "Weapons",
 				Level = 2,
@@ -492,11 +453,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://123800699010692"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			DualOzSword2 = {
 				Name = "DualOzSword2",
-				Amount = "1",
 				Chance = 120,
 				Type = "Weapons",
 				Level = 3,
@@ -505,28 +465,26 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://123800699010692"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Boss Drops
 			Denji = {
 				Name = "Chainsaw",
-				Amount = "1",
 				Type = "Shadow",
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "rbxassetid://123800699010692"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Runes
 			DgChainsawRune = {
 				Name = "DgChainsawRune",
-				Amount = "1",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "rbxassetid://123800699010692"
+				Icon = "<:Igris:1358099382951739584>"
 			}
 		},
 		EnemyPool = {"CH1", "CH2", "CH3"},
@@ -544,25 +502,22 @@ local module = {
 			-- Currency
 			Coins = {
 				Name = "Cash",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 99,
-				Icon = "rbxassetid://94131355740709"
+				Icon = "<:ariseCoin1:1358100658388996216>"
 			},
 			Gems = {
 				Name = "Gems",
-				Amount = "1",
 				Type = "Currency",
 				Rarity = "Common",
 				Order = 98,
-				Icon = "rbxassetid://80879946928667"
+				Icon = "<:BlueGemPile:1357014156422811861>"
 			},
 
 			-- Weapons
 			DualGemStaffs2 = {
 				Name = "DualGemStaffs2",
-				Amount = "1",
 				Chance = 60,
 				Type = "Weapons",
 				Level = 2,
@@ -570,11 +525,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://72858700577127"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			SlayerScythe2 = {
 				Name = "SlayerScythe2",
-				Amount = "1",
 				Chance = 30,
 				Type = "Weapons",
 				Level = 2,
@@ -582,11 +536,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://72858700577127"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 			DualRuneSword2 = {
 				Name = "DualRuneSword2",
-				Amount = "1",
 				Chance = 120,
 				Type = "Weapons",
 				Level = 3,
@@ -595,28 +548,26 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "rbxassetid://72858700577127"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Boss Drops
 			Pucci = {
 				Name = "Gucci",
-				Amount = "1",
 				Type = "Shadow",
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "rbxassetid://72858700577127"
+				Icon = "<:Igris:1358099382951739584>"
 			},
 
 			-- Runes
 			DgJojoRune = {
 				Name = "DgJojoRune",
-				Amount = "1",
 				Chance = 30,
 				Type = "Items",
 				Rarity = "Rare",
-				Icon = "rbxassetid://72858700577127"
+				Icon = "<:Igris:1358099382951739584>"
 			}
 		},
 		EnemyPool = {"JB1", "JB2", "JB3"},
@@ -640,7 +591,7 @@ for _, world in next, module do
 		Type = "Items",
 		Rank = 1,
 		OnlyBoss = true,
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:Ticket1:1357014159434453124>"
 	}
 	world.Items.Ticket2 = {
 		Name = "Ticket",
@@ -649,7 +600,7 @@ for _, world in next, module do
 		Type = "Items",
 		Rank = 2,
 		OnlyBoss = true,
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:Ticket1:1357014159434453124>"
 	}
 	world.Items.Ticket3 = {
 		Name = "Ticket",
@@ -658,7 +609,7 @@ for _, world in next, module do
 		Type = "Items",
 		Rank = 3,
 		OnlyBoss = true,
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:Ticket1:1357014159434453124>"
 	}
 	world.Items.Ticket4 = {
 		Name = "Ticket",
@@ -667,7 +618,7 @@ for _, world in next, module do
 		Type = "Items",
 		Rank = 4,
 		OnlyBoss = true,
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:Ticket2:1357014160956981340>"
 	}
 	world.Items.Ticket5 = {
 		Name = "Ticket",
@@ -676,7 +627,7 @@ for _, world in next, module do
 		Type = "Items",
 		Rank = 5,
 		OnlyBoss = true,
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:Ticket2:1357014160956981340>"
 	}
 	world.Items.Ticket6 = {
 		Name = "Ticket",
@@ -685,7 +636,7 @@ for _, world in next, module do
 		Type = "Items",
 		Rank = 6,
 		OnlyBoss = true,
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:TicketBag:1357014162999611442>"
 	}
 	world.Items.Ticket7 = {
 		Name = "Ticket",
@@ -694,7 +645,7 @@ for _, world in next, module do
 		Type = "Items",
 		Rank = 7,
 		OnlyBoss = true,
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:TicketBag:1357014162999611442>"
 	}
 	-- [Add all other global drops...]
 
@@ -726,7 +677,7 @@ for _, world in next, module do
 		Type = "Items",
 		Rank = 1,
 		OnDestroy = true,
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:COMMON_POWDER:1357008889220173964>"
 	}
 	world.Items.CommonPowderDust2 = {
 		Name = "Common Powder Dust",
@@ -735,7 +686,7 @@ for _, world in next, module do
 		Type = "Items";
 		Rank = 2;
 		OnDestroy = true;
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:COMMON_POWDER:1357008889220173964>"
 	}
 	world.Items.RarePowderDust = {
 		Name = "Rare Powder Dust",
@@ -744,7 +695,7 @@ for _, world in next, module do
 		Type = "Items",
 		Rank = 3,
 		OnDestroy = true,
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:RareDust:1357011491223507164>"
 	}
 	world.Items.RarePowderDust2 = {
 		Name = "Rare Powder Dust",
@@ -753,7 +704,7 @@ for _, world in next, module do
 		Type = "Items";
 		Rank = 4;
 		OnDestroy = true;
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:RareDust:1357011491223507164>"
 	}
 	world.Items.LegendaryPowderDust = {
 		Name = "Legendary Powder Dust",
@@ -762,7 +713,7 @@ for _, world in next, module do
 		Type = "Items",
 		Rank = 5,
 		OnDestroy = true,
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:LEGENDARYPOWDER:1357010255586001098>"
 	}
 	world.Items.LegendaryPowderDust2 = {
 		Name = "Legendary Powder Dust",
@@ -771,7 +722,7 @@ for _, world in next, module do
 		Type = "Items";
 		Rank = 6;
 		OnDestroy = true;
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:LEGENDARYPOWDER:1357010255586001098>"
 	}
 	world.Items.LegendaryPowderDust3 = {
 		Name = "Legendary Powder Dust",
@@ -780,7 +731,7 @@ for _, world in next, module do
 		Type = "Items";
 		Rank = 7;
 		OnDestroy = true;
-		Icon = "<:Igris:1358099382951739584>"
+		Icon = "<:LEGENDARYPOWDER:1357010255586001098>"
 	}
 end
 
