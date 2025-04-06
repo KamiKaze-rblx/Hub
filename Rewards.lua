@@ -207,7 +207,7 @@ local module = {
 				Icon = "<:Igris:1358099382951739584>"
 			},
 			RuneSword = {
-				Name = "RuneSword",
+				Name = "Runic Blade", -- 103689297962462
 				Chance = 150,
 				Type = "Weapons",
 				Level = 3,
@@ -268,7 +268,7 @@ local module = {
 
 			-- Weapons
 			BoneMace = {
-				Name = "BoneMace",
+				Name = "Bone Crusher",
 				Chance = 60,
 				Type = "Weapons",
 				Level = 2,
@@ -276,10 +276,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:Igris:1358099382951739584>" -- 93908798361937
 			},
 			GreatSaber = {
-				Name = "GreatSaber",
+				Name = "Colossal Saber",
 				Chance = 30,
 				Type = "Weapons",
 				Level = 2,
@@ -287,10 +287,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:Igris:1358099382951739584>" -- 116281173672114
 			},
 			SteelScythe = {
-				Name = "SteelScythe",
+				Name = "Iron Scythe",
 				Chance = 100,
 				Type = "Weapons",
 				Level = 3,
@@ -299,7 +299,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:Igris:1358099382951739584>" -- 78222396302451
 			},
 
 			-- Boss Drops
@@ -309,7 +309,7 @@ local module = {
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:Igris:1358099382951739584>" -- 113839395346393
 			},
 
 			-- Runes
@@ -351,7 +351,7 @@ local module = {
 
 			-- Weapons
 			StellKopesh = {
-				Name = "StellKopesh",
+				Name = "Steel Khopesh",
 				Chance = 60,
 				Type = "Weapons",
 				Level = 2,
@@ -359,10 +359,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:Igris:1358099382951739584>" -- 103837560108209
 			},
 			DualTrident = {
-				Name = "DualTrident",
+				Name = "Twin Tridents",
 				Chance = 30,
 				Type = "Weapons",
 				Level = 2,
@@ -370,10 +370,10 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:Igris:1358099382951739584>" -- 136082625557211
 			},
 			DualWyvernSlayer = {
-				Name = "DualWyvernSlayer",
+				Name = "Twin Wyvern Vanquishers",
 				Chance = 120,
 				Type = "Weapons",
 				Level = 3,
@@ -382,7 +382,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:Igris:1358099382951739584>" -- 83337458574852
 			},
 
 			-- Boss Drops
@@ -392,7 +392,7 @@ local module = {
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:Igris:1358099382951739584>" -- 114434346910180
 			},
 
 			-- Runes
@@ -434,7 +434,7 @@ local module = {
 
 			-- Weapons
 			ObsidianDualAxe2 = {
-				Name = "ObsidianDualAxe2",
+				Name = "Obsidian Axe", -- 132983074010949
 				Chance = 60,
 				Type = "Weapons",
 				Level = 2,
@@ -445,7 +445,7 @@ local module = {
 				Icon = "<:Igris:1358099382951739584>"
 			},
 			DualDivineAxe2 = {
-				Name = "DualDivineAxe2",
+				Name = "Twin Sacred Axes", -- 108802645426147
 				Chance = 30,
 				Type = "Weapons",
 				Level = 2,
@@ -456,7 +456,7 @@ local module = {
 				Icon = "<:Igris:1358099382951739584>"
 			},
 			DualOzSword2 = {
-				Name = "DualOzSword2",
+				Name = "Twin Oz Blades", -- 85807681094970
 				Chance = 120,
 				Type = "Weapons",
 				Level = 3,
@@ -470,7 +470,7 @@ local module = {
 
 			-- Boss Drops
 			Denji = {
-				Name = "Chainsaw",
+				Name = "Chainsaw", -- 123800699010692
 				Type = "Shadow",
 				Rarity = "Epic",
 				Order = -5993434,
@@ -517,7 +517,7 @@ local module = {
 
 			-- Weapons
 			DualGemStaffs2 = {
-				Name = "DualGemStaffs2",
+				Name = "Twin Jeweled Rods",
 				Chance = 60,
 				Type = "Weapons",
 				Level = 2,
@@ -528,7 +528,7 @@ local module = {
 				Icon = "<:Igris:1358099382951739584>"
 			},
 			SlayerScythe2 = {
-				Name = "SlayerScythe2",
+				Name = "Reaper's Scythe",
 				Chance = 30,
 				Type = "Weapons",
 				Level = 2,
@@ -539,7 +539,7 @@ local module = {
 				Icon = "<:Igris:1358099382951739584>"
 			},
 			DualRuneSword2 = {
-				Name = "DualRuneSword2",
+				Name = "Twin Runic Blades",
 				Chance = 120,
 				Type = "Weapons",
 				Level = 3,
@@ -548,7 +548,7 @@ local module = {
 				Favorite = false,
 				Enchanted = false,
 				Enchants = {},
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:Igris:1358099382951739584>" --98191425110495
 			},
 
 			-- Boss Drops
@@ -558,7 +558,7 @@ local module = {
 				Rarity = "Epic",
 				Order = -5993434,
 				OnlyBoss = true,
-				Icon = "<:Igris:1358099382951739584>"
+				Icon = "<:Igris:1358099382951739584>" -- 72858700577127
 			},
 
 			-- Runes
