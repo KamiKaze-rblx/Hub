@@ -1,15 +1,19 @@
 local v0 = {
 	Gems1 = {
-		Name = "+100 Gems",
+		Name = "+1000 Gems",
 		Image = "<:BlueGemPile:1357014156422811861>"
 	},
 	Gems2 = {
-		Name = "+500 Gems",
+		Name = "+10000 Gems",
 		Image = "<:BagofBlueGems:1357014152844935229>"
 	},
 	Gems3 = {
 		Name = "+2000 Gems",
 		Image = "<:BagofBlueGems:1357014152844935229>"
+	},
+	Potion1 = {
+		Name = "+1 RANDOM POTION",
+		Image = "<:RANDOMPOTION:1358908383566233703>"
 	},
 	Ticket1 = {
 		Name = "+2 Tickets",
@@ -35,16 +39,24 @@ local v0 = {
 		Name = "+1 Tiger",
 		Image = "<:Tiger:1357014164605767770>"
 	},
+	Horse = {
+		Name = "+1 HORSE MOUNT",
+		Image = "<:HORSEMOUNT:1358908091575570492>"
+	},
+	DivineBattleAxe2 = {
+		Name = "+1 ✨ HOLY WAR AXE",
+		Image = "<:HOLYWARAXE:1358908071685914624>"
+	},
 	Dust1 = {
-		Name = "+20 Common Powder",
+		Name = "+35 Common Powder",
 		Image = "<:COMMON_POWDER:1357008889220173964>"
 	},
 	Dust2 = {
-		Name = "+20 Rare Powder",
+		Name = "+30 Rare Powder",
 		Image = "<:RareDust:1357011491223507164>"
 	},
-	Dust3 = {
-		Name = "+20 Legendary Powder",
+	TicketLegend = {
+		Name = "+25 Legendary Powder",
 		Image = "<:LEGENDARYPOWDER:1357010255586001098>"
 	}
 };
