@@ -1,14 +1,14 @@
 local v0 = {
 	Gems1 = {
-		Name = "+1000 Gems",
+		Name = "+1,000 Gems",
 		Image = "<:BlueGemPile:1357014156422811861>"
 	},
 	Gems2 = {
-		Name = "+10000 Gems",
+		Name = "+10,000 Gems",
 		Image = "<:BagofBlueGems:1357014152844935229>"
 	},
 	Gems3 = {
-		Name = "+2000 Gems",
+		Name = "+2,000 Gems",
 		Image = "<:BagofBlueGems:1357014152844935229>"
 	},
 	Potion1 = {
