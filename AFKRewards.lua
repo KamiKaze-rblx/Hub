@@ -1,4 +1,5 @@
 --//
+print("t")
 	--getgenv().Webhook = ""
 	--getgenv().DiscordId = ""
 
