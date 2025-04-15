@@ -73,4 +73,10 @@ game:GetService("Players").LocalPlayer:WaitForChild("leaderstats"):WaitForChild(
     WebhookUpdate(Attribute)
 end)
 
+local VirtualUser = game:GetService('VirtualUser')
+LOCAL_PLAYER.Idled:connect(function()
+	VirtualUser:CaptureController()
+	VirtualUser:ClickButton2(Vector2.new())
+end)
+
 setfpscap(5)
