@@ -8,6 +8,7 @@ local player = Players.LocalPlayer
 print("AFK Rewards")
 if game.PlaceId ~= 116614712661486 then
 	game:GetService("TeleportService"):Teleport(116614712661486, game.Players.LocalPlayer)
+	task.wait(1)
 end
 
 -- Stats
