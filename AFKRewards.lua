@@ -1,5 +1,11 @@
 local isLoaded = game:IsLoaded() or game.Loaded:Wait()
 
+local VirtualUser = game:GetService('VirtualUser')
+player.Idled:connect(function()
+	VirtualUser:CaptureController()
+	VirtualUser:ClickButton2(Vector2.new())
+end)
+
 -- Services
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
@@ -71,10 +77,4 @@ end
 
 game:GetService("Players").LocalPlayer:WaitForChild("leaderstats"):WaitForChild("AfkRewards").AttributeChanged:Connect(function(Attribute)
 	WebhookUpdate(Attribute)
-end)
-
-local VirtualUser = game:GetService('VirtualUser')
-player.Idled:connect(function()
-	VirtualUser:CaptureController()
-	VirtualUser:ClickButton2(Vector2.new())
 end)
