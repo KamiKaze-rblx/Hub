@@ -1,4 +1,3 @@
-
 local isLoaded = game:IsLoaded() or game.Loaded:Wait()
 
 -- Services
