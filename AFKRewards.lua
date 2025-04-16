@@ -1,15 +1,15 @@
 local isLoaded = game:IsLoaded() or game.Loaded:Wait()
 
+-- Services
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
 local VirtualUser = game:GetService('VirtualUser')
 player.Idled:connect(function()
 	VirtualUser:CaptureController()
 	VirtualUser:ClickButton2(Vector2.new())
 end)
-
--- Services
-local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
 
 print("AFK Rewards")
 if game.PlaceId ~= 116614712661486 then
