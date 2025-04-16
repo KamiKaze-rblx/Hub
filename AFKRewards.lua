@@ -6,15 +6,14 @@ local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
--- Stats
-local RewardsPath = player.PlayerGui.CountDown.Frame.Recieved.ScrollingFrame
-local RewardInfo = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/KamiKaze-rblx/Hub/refs/heads/main/Assets.lua"))()
-
---//
 print("AFK Rewards")
 if game.PlaceId ~= 116614712661486 then
 	game:GetService("TeleportService"):Teleport(116614712661486, game.Players.LocalPlayer)
 end
+
+-- Stats
+local RewardsPath = player.PlayerGui.CountDown.Frame.Recieved.ScrollingFrame
+local RewardInfo = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/KamiKaze-rblx/Hub/refs/heads/main/Assets.lua"))()
 
 getgenv().Webhook = getgenv().Webhook or ""
 getgenv().DiscordId = getgenv().DiscordId or ""
